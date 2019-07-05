@@ -28,7 +28,10 @@
         <extension module="org.jboss.as.weld"/>
         <!-- ##KEYCLOAK_EXTENSION## -->
     </extensions>
-    <!-- {{ GREETING }} -->
+    <system-properties>
+        <property name="org.mabrarov.dockerfile-test.application.configuration.file" value="{{ APPLICATION_CONFIGURATION_FILE | e }}"/>
+    </system-properties>
+    <!-- {{ GREETING | e }} -->
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">

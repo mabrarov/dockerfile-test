@@ -5,7 +5,9 @@ LABEL name="@project.artifactId@" \
 
 ADD rootfs.tar /
 
-ENV GREETING="Hello from j2cli"
+ENV JBOSS_CONFIGURATION_FILE="${JBOSS_HOME}/standalone/configuration/@base-image.jboss.configuration.filename@" \
+    APPLICATION_CONFIGURATION_FILE="/app/config/application.properties" \
+    GREETING="Hello from j2cli"
 
 USER root
 

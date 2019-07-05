@@ -11,8 +11,17 @@
             <outputDirectory/>
             <directory>src/main/resources/rootfs</directory>
             <includes>
-                <include>**/*.xml</include>
-                <include>**/*.j2</include>
+                <include>app/template/*.j2</include>
+            </includes>
+            <filtered>true</filtered>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0444</fileMode>
+        </fileSet>
+        <fileSet>
+            <outputDirectory/>
+            <directory>src/main/resources/rootfs</directory>
+            <includes>
+                <include>app/config/*.properties</include>
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
@@ -22,11 +31,11 @@
             <outputDirectory/>
             <directory>src/main/resources/rootfs</directory>
             <includes>
-                <include>**/*.sh</include>
+                <include>app/bin/*.sh</include>
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
-            <fileMode>0775</fileMode>
+            <fileMode>0555</fileMode>
         </fileSet>
     </fileSets>
 </assembly>
