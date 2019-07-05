@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/dockerfile-test.git</connection>
+        <connection>scm:git:git@github.com:mabrarov/dockerfile-test.git</connection>
     </scm>
 
     <properties>
