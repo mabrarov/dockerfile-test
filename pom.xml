@@ -17,6 +17,7 @@
         <base-image.version>1.9-23</base-image.version>
         <base-image.user>185</base-image.user>
         <base-image.cmd>/opt/eap/bin/openshift-launch.sh</base-image.cmd>
+        <base-image.jboss.configuration.filename>standalone-openshift.xml</base-image.jboss.configuration.filename>
 
         <python-pip.package.filename>python2-pip-8.1.2-8.el7.noarch.rpm</python-pip.package.filename>
         <python-pip.package.url>http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/p/${python-pip.package.filename}</python-pip.package.url>
