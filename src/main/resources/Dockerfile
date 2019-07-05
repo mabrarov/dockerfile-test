@@ -5,6 +5,8 @@ LABEL name="@project.artifactId@" \
 
 ADD rootfs.tar /
 
+ENV GREETING_NAME="World"
+
 USER root
 
 RUN echo "Installing pip..." && \
@@ -17,5 +19,7 @@ RUN echo "Installing pip..." && \
     pip install --no-cache-dir j2cli[yaml]==@j2cli.version@ && \
     echo "j2cli installed" && \
     j2 --version
+
+CMD ["/app/bin/start.sh"]
 
 USER @base-image.user@

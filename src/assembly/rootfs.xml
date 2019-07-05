@@ -12,10 +12,21 @@
             <directory>src/main/resources/rootfs</directory>
             <includes>
                 <include>**/*.xml</include>
+                <include>**/*.j2</include>
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
             <fileMode>0664</fileMode>
+        </fileSet>
+        <fileSet>
+            <outputDirectory/>
+            <directory>src/main/resources/rootfs</directory>
+            <includes>
+                <include>**/*.sh</include>
+            </includes>
+            <filtered>true</filtered>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0775</fileMode>
         </fileSet>
     </fileSets>
 </assembly>
