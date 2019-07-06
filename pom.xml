@@ -57,31 +57,24 @@
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>base-image</artifactId>
                 <version>${project.version}</version>
-                <type>docker-info</type>
+                <classifier>docker-info</classifier>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>hollow-image</artifactId>
                 <version>${project.version}</version>
-                <type>docker-info</type>
+                <classifier>docker-info</classifier>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>app-image</artifactId>
                 <version>${project.version}</version>
-                <type>docker-info</type>
+                <classifier>docker-info</classifier>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-extension</artifactId>
-                <version>${dockerfile-maven-plugin.version}</version>
-            </extension>
-        </extensions>
         <pluginManagement>
             <plugins>
                 <plugin>

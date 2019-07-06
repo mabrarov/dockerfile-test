@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.mabrarov.dockerfile-test</groupId>
             <artifactId>hollow-image</artifactId>
-            <type>docker-info</type>
+            <classifier>docker-info</classifier>
         </dependency>
     </dependencies>
 
