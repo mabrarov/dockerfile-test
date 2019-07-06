@@ -20,7 +20,7 @@ registry.redhat.io/jboss-eap-6/eap64-openshift (Red Hat OpenJDK 1.8 + Red Hat JB
 
 Requires authentication in registry.redhat.io Docker Registry with [Red Hat account](https://www.redhat.com/wapps/ugc/register.html) 
 to pull 
-[jboss-eap-6/eap64-openshift](https://access.redhat.com/containers/?tab=overview#/registry.access.redhat.com/jboss-eap-6/eap64-openshift) 
+[jboss-eap-6/eap64-openshift](https://access.redhat.com/containers/#/registry.access.redhat.com/jboss-eap-6/eap64-openshift) 
 Red Hat Docker image during build:
 
 ```bash
