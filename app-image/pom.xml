@@ -15,7 +15,8 @@
         <base-image.version>${project.version}</base-image.version>
         <base-image.jboss.deployment.dir>deployments</base-image.jboss.deployment.dir>
 
-        <image.repository>abrarov/dockerfile-test/${project.artifactId}</image.repository>
+        <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
+        <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
     </properties>
 
     <dependencies>
@@ -108,10 +109,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <repository>${image.repository}</repository>
-                    <contextDirectory>${project.build.directory}/context</contextDirectory>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -17,7 +17,8 @@
         <base-image.cmd>/opt/eap/bin/openshift-launch.sh</base-image.cmd>
         <base-image.jboss.configuration.filename>standalone-openshift.xml</base-image.jboss.configuration.filename>
 
-        <image.repository>abrarov/dockerfile-test/${project.artifactId}</image.repository>
+        <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
+        <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
     </properties>
 
     <dependencies>
@@ -105,10 +106,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <repository>${image.repository}</repository>
-                    <contextDirectory>${project.build.directory}/context</contextDirectory>
-                </configuration>
             </plugin>
         </plugins>
     </build>

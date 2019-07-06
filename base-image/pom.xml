@@ -21,7 +21,8 @@
 
         <j2cli.version>0.3.10</j2cli.version>
 
-        <image.repository>abrarov/dockerfile-test/${project.artifactId}</image.repository>
+        <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
+        <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
     </properties>
 
     <build>
@@ -86,10 +87,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <repository>${image.repository}</repository>
-                    <contextDirectory>${project.build.directory}/context</contextDirectory>
-                </configuration>
             </plugin>
         </plugins>
     </build>
