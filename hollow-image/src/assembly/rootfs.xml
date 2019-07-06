@@ -39,14 +39,4 @@
             <fileMode>0555</fileMode>
         </fileSet>
     </fileSets>
-    <dependencySets>
-        <dependencySet>
-            <includes>
-                <include>*:ear</include>
-            </includes>
-            <outputFileNameMapping>${base-image.jboss.deployment.dir}/${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
-            <useProjectArtifact>false</useProjectArtifact>
-            <fileMode>0444</fileMode>
-        </dependencySet>
-    </dependencySets>
 </assembly>
