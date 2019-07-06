@@ -48,7 +48,21 @@ docker run -e GREETING="$(date)" --rm -it -p 8080:8080 abrarov/dockerfile-test/a
 ## Testing
 
 ```bash
-wget -q -O - http://localhost:8080
+wget -q -O - http://${DOCKER_HOST}:8080
 ```
 
-where `localhost` is Docker host address 
+where `${DOCKER_HOST}` is Docker host address
+
+expected output looks like:
+
+```html
+<html>
+<head>
+    <title>Dockerfile Maven plugin test</title>
+</head>
+<body>
+
+Sat Jul  6 15:42:38 MSK 2019
+</body>
+</html>
+``` 
