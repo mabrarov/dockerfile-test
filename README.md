@@ -18,6 +18,15 @@ registry.redhat.io/jboss-eap-6/eap64-openshift (Red Hat OpenJDK 1.8 + Red Hat JB
 
 ## Building
 
+Requires authentication in registry.redhat.io Docker Registry with Red Hat account to pull 
+registry.redhat.io/jboss-eap-6/eap64-openshift Docker image during build:
+
+```bash
+docker login registry.redhat.io
+```
+
+Command for building:
+
 ```bash
 mvn clean package
 ```
