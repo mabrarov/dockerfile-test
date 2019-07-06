@@ -26,7 +26,7 @@
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
-            <fileMode>0664</fileMode>
+            <fileMode>0666</fileMode>
         </fileSet>
         <fileSet>
             <outputDirectory/>
