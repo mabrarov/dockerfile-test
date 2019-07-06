@@ -89,6 +89,9 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
+                        <configuration>
+                            <skipDockerInfo>true</skipDockerInfo>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>tag-docker-image</id>
