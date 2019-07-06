@@ -93,7 +93,6 @@
                     <configuration>
                         <archive>
                             <manifestEntries>
-                                <!-- Commit hash provided by buildnumber-maven-plugin -->
                                 <git-commit>${buildNumber}</git-commit>
                             </manifestEntries>
                         </archive>
@@ -104,12 +103,11 @@
                     <artifactId>maven-ear-plugin</artifactId>
                     <version>3.0.1</version>
                     <configuration>
-                        <outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                        <version>6</version>
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <useBaseVersion>true</useBaseVersion>
                         <archive>
                             <manifestEntries>
-                                <!-- Commit hash provided by buildnumber-maven-plugin -->
                                 <git-commit>${buildNumber}</git-commit>
                             </manifestEntries>
                         </archive>
