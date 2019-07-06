@@ -32,7 +32,6 @@
         <property name="jboss.config.current-history-length" value="0"/>
         <property name="org.mabrarov.dockerfile-test.application.configuration.file" value="{{ APPLICATION_CONFIGURATION_FILE | e }}"/>
     </system-properties>
-    <!-- {{ GREETING | e }} -->
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -99,7 +98,7 @@
                 <level name="WARN"/>
             </logger>
             <logger category="org.jboss.as.config">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
             </logger>
             <logger category="sun.rmi">
                 <level name="WARN"/>
@@ -109,6 +108,9 @@
             </logger>
             <logger category="jacorb.config">
                 <level name="ERROR"/>
+            </logger>
+            <logger category="org.jboss.openshift.valves.StdoutAccessLogValve">
+                <level name="INFO"/>
             </logger>
             <root-logger>
                 <level name="INFO"/>

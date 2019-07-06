@@ -1,9 +1,5 @@
 FROM @base-image.repository@:@base-image.version@
 
-LABEL name="@dockerfile.repository@" \
-    version="@project.version@" \
-    git-commit="@buildNumber@"
-
 USER root
 
 RUN echo "Installing pip..." && \
@@ -18,3 +14,7 @@ RUN echo "Installing pip..." && \
     j2 --version
 
 USER @base-image.user@
+
+LABEL name="@dockerfile.repository@" \
+    version="@project.version@" \
+    git-commit="@buildNumber@"
