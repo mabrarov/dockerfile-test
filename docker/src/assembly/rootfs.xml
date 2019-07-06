@@ -32,6 +32,7 @@
             <directory>src/main/resources/rootfs</directory>
             <includes>
                 <include>app/bin/*.sh</include>
+                <include>app/bin/*.py</include>
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>

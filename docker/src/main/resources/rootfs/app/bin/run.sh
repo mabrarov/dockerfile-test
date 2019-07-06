@@ -3,7 +3,7 @@
 exit_code=0
 
 echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
-j2 --import-env="" "/app/template/application.properties.j2" -o "${APPLICATION_CONFIGURATION_FILE}"
+j2 --import-env="" --filters "/app/bin/filters.py" -o "${APPLICATION_CONFIGURATION_FILE}" "/app/template/application.properties.j2"
 exit_code=$?
 if [[ ${exit_code} -ne 0 ]]; then
     echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
@@ -12,7 +12,7 @@ if [[ ${exit_code} -ne 0 ]]; then
 fi
 
 echo "Preparing JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
-j2 --import-env="" "/app/template/standalone.xml.j2" -o "${JBOSS_CONFIGURATION_FILE}"
+j2 --import-env="" --filters "/app/bin/filters.py" -o "${JBOSS_CONFIGURATION_FILE}" "/app/template/standalone.xml.j2"
 exit_code=$?
 if [[ ${exit_code} -ne 0 ]]; then
     echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"

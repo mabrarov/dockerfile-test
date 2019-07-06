@@ -17,5 +17,5 @@ docker run --rm -it -p 8080:8080 abrarov/dockerfile-test
 or 
 
 ```bash
-docker run -e GREETING='Hello, User!' --rm -it -p 8080:8080 abrarov/dockerfile-test
+docker run -e GREETING="$(date)" --rm -it -p 8080:8080 abrarov/dockerfile-test
 ```
