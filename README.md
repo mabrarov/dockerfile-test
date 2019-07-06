@@ -11,11 +11,11 @@ mvn clean package
 ## Running
 
 ```bash
-docker run --rm -it abrarov/dockerfile-test
+docker run --rm -it -p 8080:8080 abrarov/dockerfile-test
 ```
 
 or 
 
 ```bash
-docker run --rm -it -e GREETING_NAME=user abrarov/dockerfile-test
+docker run -e GREETING='Hello, User!' --rm -it -p 8080:8080 abrarov/dockerfile-test
 ```

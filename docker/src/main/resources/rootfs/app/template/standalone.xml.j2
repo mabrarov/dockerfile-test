@@ -368,6 +368,9 @@
             <!-- ##JDBC_STORE## -->
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
+            <configuration>
+                <jsp-configuration source-vm="@maven.compiler.source@" target-vm="@maven.compiler.target@"/>
+            </configuration>
             <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
             <!-- ##HTTPS## -->
             <virtual-server name="default-host" enable-welcome-root="false"/>

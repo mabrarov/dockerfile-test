@@ -11,20 +11,46 @@
     </scm>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <resource.delimiter>@</resource.delimiter>
-
-        <base-image.repository>registry.redhat.io/jboss-eap-6/eap64-openshift</base-image.repository>
-        <base-image.version>1.9-23</base-image.version>
-        <base-image.user>185</base-image.user>
-        <base-image.cmd>/opt/eap/bin/openshift-launch.sh</base-image.cmd>
-        <base-image.jboss.configuration.filename>standalone-openshift.xml</base-image.jboss.configuration.filename>
-
-        <python-pip.package.filename>python2-pip-8.1.2-8.el7.noarch.rpm</python-pip.package.filename>
-        <python-pip.package.url>http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/p/${python-pip.package.filename}</python-pip.package.url>
-        <python-pip.package.rpm.path>/tmp/${python-pip.package.filename}</python-pip.package.rpm.path>
-
-        <j2cli.version>0.3.10</j2cli.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <modules>
+        <module>ear</module>
+        <module>war</module>
+        <module>docker</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>1.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mabrarov.dockerfile-test</groupId>
+                <artifactId>war</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>org.mabrarov.dockerfile-test</groupId>
+                <artifactId>war</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.mabrarov.dockerfile-test</groupId>
+                <artifactId>ear</artifactId>
+                <version>${project.version}</version>
+                <type>ear</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -56,6 +82,40 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.3</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <!-- Commit hash provided by buildnumber-maven-plugin -->
+                                <git-commit>${buildNumber}</git-commit>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                        <defaultLibBundleDir>lib</defaultLibBundleDir>
+                        <useBaseVersion>true</useBaseVersion>
+                        <archive>
+                            <manifestEntries>
+                                <!-- Commit hash provided by buildnumber-maven-plugin -->
+                                <git-commit>${buildNumber}</git-commit>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>dockerfile-maven-plugin</artifactId>
                     <version>1.4.10</version>
@@ -74,73 +134,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-rootfs</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>rootfs</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <attach>false</attach>
-                            <descriptors>
-                                <descriptor>src/assembly/rootfs.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>build-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>docker</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <attach>false</attach>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-docker-image</id>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>tag-docker-image</id>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <tag>${project.version}</tag>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>push-docker-image</id>
-                        <goals>
-                            <goal>push</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <repository>abrarov/${project.artifactId}</repository>
-                    <contextDirectory>${project.build.directory}/docker</contextDirectory>
-                </configuration>
             </plugin>
         </plugins>
     </build>
