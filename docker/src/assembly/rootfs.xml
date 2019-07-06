@@ -11,6 +11,7 @@
             <outputDirectory/>
             <directory>src/main/resources/rootfs</directory>
             <includes>
+                <include>app/bin/*.py</include>
                 <include>app/template/*.j2</include>
             </includes>
             <filtered>true</filtered>
@@ -32,7 +33,6 @@
             <directory>src/main/resources/rootfs</directory>
             <includes>
                 <include>app/bin/*.sh</include>
-                <include>app/bin/*.py</include>
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
