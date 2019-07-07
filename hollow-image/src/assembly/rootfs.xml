@@ -13,6 +13,7 @@
             <includes>
                 <include>app/bin/*.py</include>
                 <include>app/template/*.j2</include>
+                <include>opt/eap/**/*.xml</include>
             </includes>
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
