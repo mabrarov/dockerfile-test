@@ -2,7 +2,14 @@ FROM @base-image.repository@:@base-image.version@
 
 USER root
 
-RUN echo "Installing pip..." && \
+RUN echo "Enabling rhel-7-server-rpms YUM repository, requires Docker host with Red Hat subscription" && \
+    yum-config-manager --enable rhel-7-server-rpms > /dev/null && \
+    echo "rhel-7-server-rpms YUM repository is confugured" && \
+    echo "Installing OpenSSL" && \
+    yum install -y openssl && \
+    echo "OpenSSL installed" && \
+    openssl version && \
+    echo "Installing pip..." && \
     curl -sL @python-pip.package.url@ -o @python-pip.package.rpm.path@ && \
     rpm -i @python-pip.package.rpm.path@ && \
     rm -f @python-pip.package.rpm.path@ && \
