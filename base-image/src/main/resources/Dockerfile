@@ -17,6 +17,8 @@ RUN echo "Enabling rhel-7-server-rpms YUM repository, requires Docker host with 
     echo "pip installed" && \
     pip --version && \
     echo "Installing Jinja2 Command-Line Tool (j2cli)..." && \
+    yum install -y python-jinja2 && \
+    yum install -y python2-pyyaml && \
     pip install --no-cache-dir j2cli[yaml]==@j2cli.version@ && \
     echo "j2cli installed" && \
     j2 --version && \
