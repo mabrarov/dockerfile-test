@@ -9,16 +9,19 @@ RUN echo "Enabling rhel-7-server-rpms YUM repository, requires Docker host with 
     yum install -y openssl && \
     echo "OpenSSL installed" && \
     openssl version && \
+    echo "Enabling EPEL YUM repository" && \
+    rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+    echo "EPEL YUM repository is confugured" && \
     echo "Installing pip..." && \
-    curl -sL @python-pip.package.url@ -o @python-pip.package.rpm.path@ && \
-    rpm -i @python-pip.package.rpm.path@ && \
-    rm -f @python-pip.package.rpm.path@ && \
+    yum install -y python2-pip && \
     echo "pip installed" && \
     pip --version && \
     echo "Installing Jinja2 Command-Line Tool (j2cli)..." && \
     pip install --no-cache-dir j2cli[yaml]==@j2cli.version@ && \
     echo "j2cli installed" && \
-    j2 --version
+    j2 --version && \
+    echo "Cleaning YUM cache" && \
+    yum clean all
 
 USER @base-image.user@
 
