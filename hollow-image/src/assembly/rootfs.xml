@@ -7,6 +7,115 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
+            <!--
+                This file set adds directory TAR entries corresponding to the following tree:
+
+                app (0555 root:root)
+            -->
+            <outputDirectory/>
+            <directory>src/main/resources/rootfs</directory>
+            <excludes>
+                <exclude>**/*.*</exclude>
+            </excludes>
+            <includes>
+                <include>app</include>
+            </includes>
+            <directoryMode>0555</directoryMode>
+            <directoryOwner>
+                <user>
+                    <name>root</name>
+                    <id>0</id>
+                </user>
+                <group>
+                    <name>root</name>
+                    <id>0</id>
+                </group>
+            </directoryOwner>
+        </fileSet>
+        <fileSet>
+            <!--
+                This file set adds directory TAR entries corresponding to the following tree:
+
+                app
+                │
+                └─── config (0777 root:root)
+            -->
+            <outputDirectory/>
+            <directory>src/main/resources/rootfs</directory>
+            <excludes>
+                <exclude>**/*.*</exclude>
+            </excludes>
+            <includes>
+                <include>app/config</include>
+            </includes>
+            <directoryMode>0777</directoryMode>
+            <directoryOwner>
+                <user>
+                    <name>root</name>
+                    <id>0</id>
+                </user>
+                <group>
+                    <name>root</name>
+                    <id>0</id>
+                </group>
+            </directoryOwner>
+        </fileSet>
+        <fileSet>
+            <!--
+                Directories may have permissions and owner in TAR only if they are added as TAR entries.
+                This is so by nature of TAR format.
+
+                This file set uses workaround to add empty directories with Maven Assembly Plugin.
+                All files are excluded using *.* file name pattern from the directory which needs to be added.
+                But the directory additionally contains files which have only file name extension,
+                i.e. name of file looks like ".xyz" - ".gitignore" file in our case.
+                These files are not excluded and so they are picked by Maven Assembly Plugin.
+                At the same time ".gitignore" file is one of the files ignored by Maven Assembly Plugin by default.
+                This makes Maven Assembly Plugin adding empty directory into file set.
+
+                Adding empty directories explicitly is required because the format of Maven Assembly descriptor
+                doesn't provide way to explicitly specify attributes of each node of file system without conflicts.
+
+                This file set adds directory TAR entries corresponding to the following tree:
+
+                app (0555 root:root) - this entry is not taken because it exists in previous file set
+                │
+                ├─── bin (0555 root:root)
+                │
+                ├─── config (0555 root:root) - this entry is not taken because it exists in previous file set
+                │
+                └─── template (0555 root:root)
+            -->
+            <outputDirectory/>
+            <directory>src/main/resources/rootfs</directory>
+            <excludes>
+                <exclude>**/*.*</exclude>
+            </excludes>
+            <directoryMode>0555</directoryMode>
+            <directoryOwner>
+                <user>
+                    <name>root</name>
+                    <id>0</id>
+                </user>
+                <group>
+                    <name>root</name>
+                    <id>0</id>
+                </group>
+            </directoryOwner>
+        </fileSet>
+        <!--
+            After previous file sets we have TAR entries corresponding to the following tree
+            (no files - only empty directories)
+
+            app (0555 root:root)
+            │
+            ├─── bin (0555 root:root)
+            │
+            ├─── config (0777 root:root)
+            │
+            └─── template (0555 root:root)
+        -->
+        <fileSet>
             <outputDirectory/>
             <directory>src/main/resources/rootfs</directory>
             <includes>

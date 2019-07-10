@@ -13,7 +13,6 @@
     <properties>
         <base-image.repository>abrarov/dockerfile-test/hollow-image</base-image.repository>
         <base-image.version>${project.version}</base-image.version>
-        <base-image.jboss.deployment.dir>deployments</base-image.jboss.deployment.dir>
 
         <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
         <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
