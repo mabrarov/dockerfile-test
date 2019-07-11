@@ -5,12 +5,43 @@
         <format>tar</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <!--
+                Directories may have permissions and owner in TAR only if they are added as TAR entries.
+
+                This file set adds directory TAR entries corresponding to the following tree:
+
+                deployments (0777 root:root)
+            -->
+            <outputDirectory/>
+            <directory>src/main/resources/rootfs</directory>
+            <excludes>
+                <exclude>**/*.*</exclude>
+            </excludes>
+            <includes>
+                <include>deployments</include>
+            </includes>
+            <directoryMode>0777</directoryMode>
+            <directoryOwner>
+                <user>
+                    <name>root</name>
+                    <id>0</id>
+                </user>
+                <group>
+                    <name>root</name>
+                    <id>0</id>
+                </group>
+            </directoryOwner>
+        </fileSet>
+    </fileSets>
     <dependencySets>
         <dependencySet>
+            <outputDirectory>deployments</outputDirectory>
             <includes>
                 <include>*:ear</include>
             </includes>
-            <outputFileNameMapping>${base-image.jboss.deployment.dir}/${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <useProjectArtifact>false</useProjectArtifact>
             <fileMode>0444</fileMode>
             <fileOwner>
