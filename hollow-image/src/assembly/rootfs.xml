@@ -6,6 +6,10 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
+        <!--
+            Directories may have permissions, owner and group in TAR only if they are added as TAR entries.
+            Below 3 file sets add emtpy directories explicitly to ensure that TAR directory entries are created.
+        -->
         <fileSet>
             <!--
                 This file set adds directory TAR entries corresponding to the following tree:
@@ -62,27 +66,11 @@
         </fileSet>
         <fileSet>
             <!--
-                Directories may have permissions and owner in TAR only if they are added as TAR entries.
-                This is so by nature of TAR format.
-
-                This file set uses workaround to add empty directories with Maven Assembly Plugin.
-                All files are excluded using *.* file name pattern from the directory which needs to be added.
-                But the directory additionally contains files which have only file name extension,
-                i.e. name of file looks like ".xyz" - ".gitignore" file in our case.
-                These files are not excluded and so they are picked by Maven Assembly Plugin.
-                At the same time ".gitignore" file is one of the files ignored by Maven Assembly Plugin by default.
-                This makes Maven Assembly Plugin adding empty directory into file set.
-
-                Adding empty directories explicitly is required because the format of Maven Assembly descriptor
-                doesn't provide way to explicitly specify attributes of each node of file system without conflicts.
-
                 This file set adds directory TAR entries corresponding to the following tree:
 
-                app (0555 root:root) - this entry is not taken because it exists in previous file set
+                app
                 │
                 ├─── bin (0555 root:root)
-                │
-                ├─── config (0555 root:root) - this entry is not taken because it exists in previous file set
                 │
                 └─── template (0555 root:root)
             -->
@@ -91,6 +79,10 @@
             <excludes>
                 <exclude>**/*.*</exclude>
             </excludes>
+            <includes>
+                <include>app/bin</include>
+                <include>app/template</include>
+            </includes>
             <directoryMode>0555</directoryMode>
             <directoryOwner>
                 <user>
@@ -105,7 +97,7 @@
         </fileSet>
         <!--
             After previous file sets we have TAR entries corresponding to the following tree
-            (no files - only empty directories)
+            (no files - only empty directories):
 
             app (0555 root:root)
             │
@@ -146,6 +138,12 @@
                 </group>
             </directoryOwner>
         </fileSet>
+        <!--
+            If below file sets add the same directory(s) as mentioned by previous (see above) file sets
+            then it is considered as duplicate and does not override permissions, owner and group of directory
+            specified in previous file sets, i.e. such directory is not added as new TAR directory entry,
+            but if directory contains files then new TAR file entries are still created (files are still added).
+        -->
         <fileSet>
             <outputDirectory/>
             <directory>src/main/resources/rootfs</directory>

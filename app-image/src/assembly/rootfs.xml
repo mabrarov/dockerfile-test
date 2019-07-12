@@ -6,6 +6,10 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
+        <!--
+            Directories may have permissions, owner and group in TAR only if they are added as TAR entries.
+            Below file set adds emtpy directories explicitly to ensure that TAR directory entries are created.
+        -->
         <fileSet>
             <!--
                 Directories may have permissions and owner in TAR only if they are added as TAR entries.
@@ -36,6 +40,12 @@
         </fileSet>
     </fileSets>
     <dependencySets>
+        <!--
+            If below sets add the same directory(s) as mentioned by previous (see above) file set
+            then it is considered as duplicate and does not override permissions, owner and group of directory
+            specified in previous file set, i.e. such directory is not added as new TAR directory entry,
+            but if directory contains files then new TAR file entries are still created (files are still added).
+        -->
         <dependencySet>
             <outputDirectory>deployments</outputDirectory>
             <includes>
