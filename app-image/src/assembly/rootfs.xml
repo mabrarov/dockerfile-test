@@ -12,8 +12,6 @@
         -->
         <fileSet>
             <!--
-                Directories may have permissions and owner in TAR only if they are added as TAR entries.
-
                 This file set adds directory TAR entries corresponding to the following tree:
 
                 deployments (0777 root:root)
