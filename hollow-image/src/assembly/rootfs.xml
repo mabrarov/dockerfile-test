@@ -8,13 +8,17 @@
     <fileSets>
         <!--
             Directories may have permissions, owner and group in TAR only if they are added as TAR entries.
-            Below 3 file sets add emtpy directories explicitly to ensure that TAR directory entries are created.
+            Below 2 file sets add emtpy directories explicitly to ensure that TAR directory entries are created.
         -->
         <fileSet>
             <!--
                 This file set adds directory TAR entries corresponding to the following tree:
 
                 app (0555 root:root)
+                │
+                ├─── bin (0555 root:root)
+                │
+                └─── template (0555 root:root)
             -->
             <outputDirectory/>
             <directory>src/main/resources/rootfs</directory>
@@ -23,6 +27,8 @@
             </excludes>
             <includes>
                 <include>app</include>
+                <include>app/bin</include>
+                <include>app/template</include>
             </includes>
             <directoryMode>0555</directoryMode>
             <directoryOwner>
@@ -53,37 +59,6 @@
                 <include>app/config</include>
             </includes>
             <directoryMode>0777</directoryMode>
-            <directoryOwner>
-                <user>
-                    <name>root</name>
-                    <id>0</id>
-                </user>
-                <group>
-                    <name>root</name>
-                    <id>0</id>
-                </group>
-            </directoryOwner>
-        </fileSet>
-        <fileSet>
-            <!--
-                This file set adds directory TAR entries corresponding to the following tree:
-
-                app
-                │
-                ├─── bin (0555 root:root)
-                │
-                └─── template (0555 root:root)
-            -->
-            <outputDirectory/>
-            <directory>src/main/resources/rootfs</directory>
-            <excludes>
-                <exclude>**/*.*</exclude>
-            </excludes>
-            <includes>
-                <include>app/bin</include>
-                <include>app/template</include>
-            </includes>
-            <directoryMode>0555</directoryMode>
             <directoryOwner>
                 <user>
                     <name>root</name>
