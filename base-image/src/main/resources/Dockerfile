@@ -1,4 +1,4 @@
-FROM @base-image.repository@:@base-image.version@
+FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-23
 
 USER root
 
@@ -13,7 +13,7 @@ RUN echo "Installing pip..." && \
     echo "j2cli installed" && \
     j2 --version
 
-USER @base-image.user@
+USER 185
 
 LABEL name="@dockerfile.repository@" \
     version="@project.version@" \

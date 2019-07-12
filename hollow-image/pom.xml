@@ -11,12 +11,6 @@
     <packaging>pom</packaging>
 
     <properties>
-        <base-image.repository>abrarov/dockerfile-test/base-image</base-image.repository>
-        <base-image.version>${project.version}</base-image.version>
-        <base-image.user>185</base-image.user>
-        <base-image.cmd>/opt/eap/bin/openshift-launch.sh</base-image.cmd>
-        <base-image.jboss.configuration.filename>standalone-openshift.xml</base-image.jboss.configuration.filename>
-
         <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
         <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
     </properties>
