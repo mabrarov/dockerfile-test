@@ -23,19 +23,8 @@ function rm_all {
 function get_nth_item {
     index=${1}
     array="${2}"
-    i=0
-    for s in $(split_by_colon "${array}"); do
-        if [[ ${i} -lt ${index} ]]; then
-            i=$((i + 1))
-            continue
-        fi
-        if [[ ${i} -gt ${index} ]]; then
-            return 1
-        fi
-        echo "${s}"
-        return 0
-    done
-    return 1
+    row_index=$((index+1))
+    split_by_colon "${array}" | awk "NR==${row_index}"
 }
 
 function add_prefix_and_postfix {
