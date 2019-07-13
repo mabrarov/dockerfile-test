@@ -154,7 +154,7 @@ while [[ ${completed} -eq 0 ]] ; do
     if [[ $(get_nth_item 0 "${exist_any_result}") -ne 0 ]]; then
         completed=1
         failed=1
-        failed_marker=$(get_nth_item 1 "${exist_any_result}")
+        failed_marker="$(get_nth_item 1 "${exist_any_result}")"
         continue
     fi
     if [[ $(exist_all "${success_markers}") -ne 0 ]]; then
