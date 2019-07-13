@@ -120,9 +120,9 @@ if [[ ${exit_code} -ne 0 ]]; then
     exit ${exit_code}
 fi
 
-fail_markers=$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".failed" "${DEPLOYMENTS}")
-success_markers=$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".deployed" "${DEPLOYMENTS}")
-deploy_check_attempts=$(int "$(calc "${DEPLOY_TIMEOUT}/${DEPLOY_CHECK_INTERVAL}")")
+fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".failed" "${DEPLOYMENTS}")"
+success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".deployed" "${DEPLOYMENTS}")"
+deploy_check_attempts="$(int "$(calc "${DEPLOY_TIMEOUT}/${DEPLOY_CHECK_INTERVAL}")")"
 
 rm_all "${fail_markers}"
 rm_all "${success_markers}"
