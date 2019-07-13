@@ -174,12 +174,13 @@ done
 if [[ ${deployed} -ne 0 ]]; then
     echo "Detected completion of deployment with $(concat_all ", " "${success_markers}")"
 else
-    exit_code=1
     if [[ ${failed} -ne 0 ]]; then
         echo "Detected failed deployment with ${failed_marker}, stopping JBoss EAP"
+        exit_code=1
     fi
     if [[ ${timeout} -ne 0 ]]; then
         echo "Deployment timeout ${DEPLOY_TIMEOUT} sec happened, stopping JBoss EAP"
+        exit_code=1
     fi
     if [[ ${alive} -ne 0 ]]; then
         kill -TERM ${jboss_pid}
