@@ -8,18 +8,23 @@ function int() {
     awk "BEGIN{printf \"%.0f\", $*}"
 }
 
+function split_by_colon {
+    array="${1}"
+    echo -e "${array//:/\n}"
+}
+
 function rm_all {
-    array=${1}
-    for f in $(echo -e "${array//:/\n}"); do
+    array="${1}"
+    for f in $(split_by_colon "${array}"); do
         rm -f ${f}
     done
 }
 
 function get_nth_item {
     index=${1}
-    array=${2}
+    array="${2}"
     i=0
-    for s in $(echo -e "${array//:/\n}"); do
+    for s in $(split_by_colon "${array}"); do
         if [[ ${i} -lt ${index} ]]; then
             i=$((i + 1))
             continue
@@ -27,31 +32,31 @@ function get_nth_item {
         if [[ ${i} -gt ${index} ]]; then
             return 1
         fi
-        echo ${s}
+        echo "${s}"
         return 0
     done
     return 1
 }
 
 function add_prefix_and_postfix {
-    prefix=${1}
-    postfix=${2}
-    array=${3}
+    prefix="${1}"
+    postfix="${2}"
+    array="${3}"
     first=1
     result=""
-    for s in $(echo -e "${array//:/\n}"); do
+    for s in $(split_by_colon "${array}"); do
         if [[ ${first} -eq 0 ]]; then
             result="${result}:"
         fi;
         result="${result}${prefix}${s}${postfix}"
         first=0
     done
-    echo ${result}
+    echo "${result}"
 }
 
 function pid_alive {
-    pid=${1}
-    if ps -p ${pid} &> /dev/null; then
+    pid="${1}"
+    if ps -p "${pid}" &> /dev/null; then
         echo 1
     else
         echo 0
@@ -59,24 +64,24 @@ function pid_alive {
 }
 
 function concat_all {
-    delimiter=${1}
-    array=${2}
+    delimiter="${1}"
+    array="${2}"
     first=1
     result=""
-    for s in $(echo -e "${array//:/\n}"); do
+    for s in $(split_by_colon "${array}"); do
         if [[ ${first} -eq 0 ]]; then
             result="${result}${delimiter}"
         fi;
         result="${result}${s}"
         first=0
     done
-    echo ${result}
+    echo "${result}"
 }
 
 function exist_any {
-    array=${1}
-    for s in $(echo -e "${array//:/\n}"); do
-        if [[ -f ${s} ]] || [[ -d ${s} ]]; then
+    array="${1}"
+    for s in $(split_by_colon "${array}"); do
+        if [[ -f "${s}" ]] || [[ -d "${s}" ]]; then
             echo "1:${s}"
             return
         fi
@@ -85,9 +90,9 @@ function exist_any {
 }
 
 function exist_all {
-    array=${1}
-    for s in $(echo -e "${array//:/\n}"); do
-        if ! [[ -f ${s} ]] && ! [[ -d ${s} ]]; then
+    array="${1}"
+    for s in $(split_by_colon "${array}"); do
+        if ! [[ -f "${s}" ]] && ! [[ -d "${s}" ]]; then
             echo 0
             return
         fi
