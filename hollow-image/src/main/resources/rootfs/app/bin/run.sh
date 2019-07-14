@@ -155,8 +155,10 @@ echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " "${fail_
 jboss_pid=$!
 exit_code=$?
 
+trap "kill -HUP \"${jboss_pid}\"" HUP
 trap "kill -TERM \"${jboss_pid}\"" INT
-trap "kill -TERM \"${jboss_pid}\"" QUIT
+trap "kill -QUIT \"${jboss_pid}\"" QUIT
+trap "kill -PIPE \"${jboss_pid}\"" PIPE
 trap "kill -TERM \"${jboss_pid}\"" TERM
 
 attempts=0
