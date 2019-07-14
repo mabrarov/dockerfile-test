@@ -10,7 +10,17 @@ function int() {
 
 function split_by_colon {
     array="${1}"
-    echo -e "${array//:/\n}"
+    if [[ "${array}" = "" ]]; then
+        return
+    fi
+    while true; do
+        s="${array%%\:*}"
+        echo "$s"
+        if [[ "${array}" = "${s}" ]]; then
+            break
+        fi
+        array="${array#*\:}"
+    done
 }
 
 function rm_all {
@@ -126,36 +136,31 @@ trap "kill -TERM ${jboss_pid}" INT
 trap "kill -TERM ${jboss_pid}" QUIT
 trap "kill -TERM ${jboss_pid}" TERM
 
-completed=0
 attempts=0
 alive=1
 deployed=0
 failed=0
 timeout=0
 failed_marker=""
-while [[ ${completed} -eq 0 ]] ; do
+while true; do
     if [[ $(pid_alive "${jboss_pid}") -eq 0 ]]; then
-        completed=1
         alive=0
-        continue
+        break
     fi
     exist_any_result="$(exist_any "${fail_markers}")"
     if [[ $(get_nth_item 0 "${exist_any_result}") -ne 0 ]]; then
-        completed=1
         failed=1
         failed_marker="$(get_nth_item 1 "${exist_any_result}")"
-        continue
+        break
     fi
     if [[ $(exist_all "${success_markers}") -ne 0 ]]; then
-        completed=1
         deployed=1
-        continue
+        break
     fi
     attempts=$((attempts+1))
     if [[ ${attempts} -ge ${deploy_check_attempts} ]]; then
-        completed=1
         timeout=1
-        continue
+        break
     fi
     sleep ${DEPLOY_CHECK_INTERVAL}
 done
