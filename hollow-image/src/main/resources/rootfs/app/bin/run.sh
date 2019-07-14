@@ -69,7 +69,7 @@ function add_prefix_and_postfix {
     for s in $(split_by_colon "${array}"); do
         if [[ "${first}" -eq 0 ]]; then
             result="${result}:"
-        fi;
+        fi
         result="${result}${prefix}${s}${postfix}"
         first=0
     done
@@ -93,7 +93,7 @@ function concat_all {
     for s in $(split_by_colon "${array}"); do
         if [[ "${first}" -eq 0 ]]; then
             result="${result}${delimiter}"
-        fi;
+        fi
         result="${result}${s}"
         first=0
     done
