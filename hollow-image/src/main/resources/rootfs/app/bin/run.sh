@@ -26,7 +26,7 @@ function split_by_colon {
 function rm_all {
     array="${1}"
     for f in $(split_by_colon "${array}"); do
-        rm -f ${f}
+        rm -f "${f}"
     done
 }
 
