@@ -13,13 +13,37 @@ function split_by_colon {
     if [[ "${array}" = "" ]]; then
         return
     fi
+    number_of_params="${#}"
+    from_index_defined=0
+    till_index_defined=0
+    if [[ ${number_of_params} -ge 2 ]]; then
+        from_index="${2}"
+        from_index_defined=1
+        if [[ ${number_of_params} -ge 3 ]]; then
+            till_index="${3}"
+            till_index_defined=1
+        fi
+    fi
+    i=0
     while true; do
         s="${array%%\:*}"
-        echo "$s"
+        if [[ ${from_index_defined} -eq 0 ]]; then
+            echo "$s"
+        else
+            if [[ ${till_index_defined} -ne 0 ]]; then
+                if [[ ${i} -gt ${till_index} ]]; then
+                    break
+                fi
+            fi
+            if [[ ${i} -ge ${from_index} ]]; then
+                echo "$s"
+            fi
+        fi
         if [[ "${array}" = "${s}" ]]; then
             break
         fi
         array="${array#*\:}"
+        i=$((i+1))
     done
 }
 
@@ -33,8 +57,7 @@ function rm_all {
 function get_nth_item {
     index=${1}
     array="${2}"
-    row_index=$((index+1))
-    split_by_colon "${array}" | awk "NR==${row_index}"
+    split_by_colon "${array}" "${index}" "${index}"
 }
 
 function add_prefix_and_postfix {
