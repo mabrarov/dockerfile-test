@@ -1,4 +1,4 @@
-FROM abrarov/dockerfile-test/hollow-image:@project.version@
+FROM abrarov/dockerfile-test-hollow:@project.version@
 
 ADD rootfs.tar /
 
