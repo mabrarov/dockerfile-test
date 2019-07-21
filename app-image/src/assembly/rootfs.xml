@@ -49,7 +49,7 @@
             <includes>
                 <include>*:ear</include>
             </includes>
-            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
             <useProjectArtifact>false</useProjectArtifact>
             <fileMode>0444</fileMode>
             <fileOwner>
