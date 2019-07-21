@@ -1,4 +1,4 @@
-FROM abrarov/dockerfile-test/base-image:@project.version@
+FROM abrarov/dockerfile-test-base:@project.version@
 
 CMD ["/app/bin/run.sh"]
 

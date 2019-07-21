@@ -17,7 +17,7 @@
 
         <j2cli.version>0.3.10</j2cli.version>
 
-        <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
+        <dockerfile.repository>abrarov/dockerfile-test-base</dockerfile.repository>
         <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
     </properties>
 
