@@ -3,8 +3,8 @@
 Test of [Dockerfile Maven plugin](https://github.com/spotify/dockerfile-maven), which
 
 * solves [The backlash of chmod/chown/mv in your Dockerfile](https://medium.com/@lmakarov/the-backlash-of-chmod-chown-mv-in-your-dockerfile-f12fe08c0b55) 
-  issue in the part of location and permissions by using Maven Assembly plugin and TAR format, i.e. works correctly and
-  uniformly when building on Linux and on Windows (using remote Docker Engine)
+  issue by using Maven Assembly plugin and TAR format, i.e. works correctly and uniformly when building 
+  on Linux and on Windows (using remote Docker Engine)
 * uses [Red Hat JBoss EAP 6.4 Docker image](https://access.redhat.com/containers/#/registry.access.redhat.com/jboss-eap-6/eap64-openshift)
   and controls deployment of application, i.e. ensures that application is deployed successfully or stops 
   Docker container with non zero exit code otherwise
