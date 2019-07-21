@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>hollow-image</artifactId>
@@ -13,11 +13,8 @@
     <properties>
         <base-image.groupId>org.mabrarov.dockerfile-test</base-image.groupId>
         <base-image.artifactId>base-image</base-image.artifactId>
-        <base-image.user>185</base-image.user>
-        <base-image.cmd>/opt/eap/bin/openshift-launch.sh</base-image.cmd>
-        <base-image.jboss.configuration.filename>standalone-openshift.xml</base-image.jboss.configuration.filename>
 
-        <dockerfile.repository>abrarov/dockerfile-test/${project.artifactId}</dockerfile.repository>
+        <dockerfile.repository>abrarov/dockerfile-test-hollow</dockerfile.repository>
         <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
 
         <base-image.docker-info.directory>${project.build.directory}/base-image</base-image.docker-info.directory>
@@ -142,6 +139,9 @@
                         <goals>
                             <goal>build</goal>
                         </goals>
+                        <configuration>
+                            <skipDockerInfo>true</skipDockerInfo>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>tag-docker-image</id>
