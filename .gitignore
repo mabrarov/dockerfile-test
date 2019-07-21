@@ -1,5 +1,5 @@
 # Maven output
-/target/
+target/
 
 # IntelliJ IDEA stuff
 .idea/

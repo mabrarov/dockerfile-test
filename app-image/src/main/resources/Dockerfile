@@ -1,6 +1,8 @@
-FROM @base-image.repository@:@project.version@
+FROM abrarov/dockerfile-test-hollow:@project.version@
 
 ADD rootfs.tar /
+
+ENV DEPLOYMENTS="${DEPLOYMENTS}:ear.ear"
 
 LABEL name="@dockerfile.repository@" \
     version="@project.version@" \
