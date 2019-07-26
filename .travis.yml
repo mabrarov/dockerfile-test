@@ -39,10 +39,16 @@ matrix:
       jdk: openjdk11
 
 before_install:
-  - docker login -u "${REDHAT_USER}" -p "${REDHAT_PASSWORD}" registry.redhat.io
+  - echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
 
 install: skip
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
   - mvn --batch-mode clean package
+
+deploy:
+  provider: script
+  script: push-docker-images.sh
+  on:
+    branch: master
