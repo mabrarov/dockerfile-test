@@ -1,6 +1,6 @@
 # Test of Dockerfile Maven plugin
 
-[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/releases/latest) [![License](https://img.shields.io/github/license/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
+[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/releases/latest) [![License](https://img.shields.io/github/license/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
 
 Branch | Linux
 -------|-------
