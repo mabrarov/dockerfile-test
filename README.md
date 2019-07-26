@@ -1,5 +1,12 @@
 # Test of Dockerfile Maven plugin
 
+[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/releases/latest) [![License](https://img.shields.io/github/license/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
+
+Branch | Linux
+-------|-------
+[master](https://github.com/mabrarov/dockerfile-test/tree/master) | [![Travis CI build status](https://travis-ci.org/mabrarov/dockerfile-test.svg?branch=master)](https://travis-ci.org/mabrarov/dockerfile-test)
+[develop](https://github.com/mabrarov/dockerfile-test/tree/develop) | [![Travis CI build status](https://travis-ci.org/mabrarov/dockerfile-test.svg?branch=develop)](https://travis-ci.org/mabrarov/dockerfile-test)
+
 Test of [Dockerfile Maven plugin](https://github.com/spotify/dockerfile-maven), which
 
 * solves [The backlash of chmod/chown/mv in your Dockerfile](https://medium.com/@lmakarov/the-backlash-of-chmod-chown-mv-in-your-dockerfile-f12fe08c0b55) 
