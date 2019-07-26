@@ -55,7 +55,7 @@ script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: push-docker-images.sh
+  script: bash push-docker-images.sh
   on:
     branch: master
     condition: ${RELEASE_JOB} = 1
