@@ -23,20 +23,25 @@ cache:
 services:
   - docker
 
+env:
+  global:
+    - RELEASE_JOB: 0
+
 matrix:
   include:
+    # OpenJDK 11
+    - dist: bionic
+      env: RELEASE_JOB=1
+      jdk: openjdk11
+    # Oracle JDK 11
+    - dist: trusty
+      jdk: oraclejdk11
     # OpenJDK 8
     - dist: trusty
       jdk: openjdk8
     # Oracle JDK 8
     - dist: trusty
       jdk: oraclejdk8
-    # Oracle JDK 11
-    - dist: trusty
-      jdk: oraclejdk11
-    # OpenJDK 11
-    - dist: bionic
-      jdk: openjdk11
 
 before_install:
   - echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
@@ -52,3 +57,4 @@ deploy:
   script: push-docker-images.sh
   on:
     branch: master
+    condition: ${RELEASE_JOB} = 1
