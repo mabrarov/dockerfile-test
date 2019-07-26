@@ -40,6 +40,7 @@ matrix:
 
 before_install:
   - echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
+  - echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
 
 install: skip
 
