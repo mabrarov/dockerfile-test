@@ -51,6 +51,7 @@ install: skip
 script:
   - cd ${TRAVIS_BUILD_DIR}
   - mvn --batch-mode clean package
+  - docker images
 
 deploy:
   skip_cleanup: true
