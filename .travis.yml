@@ -53,6 +53,7 @@ script:
   - mvn --batch-mode clean package
 
 deploy:
+  skip_cleanup: true
   provider: script
   script: push-docker-images.sh
   on:
