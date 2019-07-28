@@ -40,7 +40,7 @@
                 <include>deployments</include>
             </includes>
             <directoryMode>0777</directoryMode>
-            <directoryOwner>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -49,7 +49,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </fileSet>
     </fileSets>
     <dependencySets>
@@ -67,7 +67,7 @@
             <outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
             <useProjectArtifact>false</useProjectArtifact>
             <fileMode>0444</fileMode>
-            <fileOwner>
+            <fileOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -76,8 +76,8 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </fileOwner>
-            <directoryOwner>
+            </fileOwnership>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -86,7 +86,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </dependencySet>
     </dependencySets>
 </assembly>

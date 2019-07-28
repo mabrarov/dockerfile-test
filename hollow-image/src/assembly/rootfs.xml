@@ -46,7 +46,7 @@
                 <include>app/template</include>
             </includes>
             <directoryMode>0555</directoryMode>
-            <directoryOwner>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -55,7 +55,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </fileSet>
         <fileSet>
             <!--
@@ -74,7 +74,7 @@
                 <include>app/config</include>
             </includes>
             <directoryMode>0777</directoryMode>
-            <directoryOwner>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -83,7 +83,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </fileSet>
         <!--
             After previous file sets we have TAR entries corresponding to the following tree
@@ -107,7 +107,7 @@
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
             <fileMode>0444</fileMode>
-            <fileOwner>
+            <fileOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -116,8 +116,8 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </fileOwner>
-            <directoryOwner>
+            </fileOwnership>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -126,7 +126,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </fileSet>
         <!--
             If below file sets add the same directory(s) as mentioned by previous (see above) file sets
@@ -143,7 +143,7 @@
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
             <fileMode>0666</fileMode>
-            <fileOwner>
+            <fileOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -152,8 +152,8 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </fileOwner>
-            <directoryOwner>
+            </fileOwnership>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -162,7 +162,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </fileSet>
         <fileSet>
             <outputDirectory/>
@@ -173,7 +173,7 @@
             <filtered>true</filtered>
             <lineEnding>unix</lineEnding>
             <fileMode>0555</fileMode>
-            <fileOwner>
+            <fileOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -182,8 +182,8 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </fileOwner>
-            <directoryOwner>
+            </fileOwnership>
+            <directoryOwnership>
                 <user>
                     <name>root</name>
                     <id>0</id>
@@ -192,7 +192,7 @@
                     <name>root</name>
                     <id>0</id>
                 </group>
-            </directoryOwner>
+            </directoryOwnership>
         </fileSet>
     </fileSets>
 </assembly>
