@@ -227,7 +227,7 @@ if [[ "${alive}" -ne 0 ]]; then
   wait "${jboss_pid}"
 fi
 
-trap - TERM QUIT INT
+trap - HUP INT QUIT PIPE TERM
 wait "${jboss_pid}"
 jboss_exit_code=$?
 if [[ "${exit_code}" -eq 0 ]]; then
