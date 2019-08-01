@@ -50,7 +50,7 @@ install: skip
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
-  - mvn --batch-mode clean package
+  - mvn --batch-mode clean package -Ddockerfile.googleContainerRegistryEnabled=false
   - docker images
 
 deploy:
