@@ -138,101 +138,114 @@ function exist_all {
   echo 1
 }
 
-exit_code=0
+function main() {
+  exit_code=0
 
-echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
-j2 --import-env="" --filters "/app/bin/filters.py" -o "${APPLICATION_CONFIGURATION_FILE}" "/app/template/application.properties.j2"
-exit_code=$?
-if [ "${exit_code}" -ne 0 ]; then
-  echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
-  echo "Exiting with ${exit_code}"
-  exit "${exit_code}"
-fi
-
-echo "Preparing JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
-j2 --import-env="" --filters "/app/bin/filters.py" -o "${JBOSS_CONFIGURATION_FILE}" "/app/template/standalone.xml.j2"
-exit_code=$?
-if [ "${exit_code}" -ne 0 ]; then
-  echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
-  echo "Exiting with ${exit_code}"
-  exit "${exit_code}"
-fi
-
-fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".failed" "${DEPLOYMENTS}")"
-success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".deployed" "${DEPLOYMENTS}")"
-deploy_check_attempts="$(int "$(calc "${DEPLOY_TIMEOUT}/${DEPLOY_CHECK_INTERVAL}")")"
-
-rm_all "${fail_markers}"
-rm_all "${success_markers}"
-
-echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " "${fail_markers}") or all of $(concat_all ", " "${success_markers}")"
-
-/opt/eap/bin/openshift-launch.sh "$@" &
-jboss_pid=$!
-exit_code=$?
-
-trap "kill -HUP \"${jboss_pid}\"" HUP
-trap "kill -TERM \"${jboss_pid}\"" INT
-trap "kill -QUIT \"${jboss_pid}\"" QUIT
-trap "kill -PIPE \"${jboss_pid}\"" PIPE
-trap "kill -TERM \"${jboss_pid}\"" TERM
-
-attempts=0
-alive=1
-deployed=0
-failed=0
-timeout=0
-failed_marker=""
-while true; do
-  if [ "$(pid_alive "${jboss_pid}")" -eq 0 ]; then
-    alive=0
-    break
+  echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
+  j2 --import-env="" --filters "/app/bin/filters.py" \
+    -o "${APPLICATION_CONFIGURATION_FILE}" \
+    "/app/template/application.properties.j2"
+  exit_code=$?
+  if [ "${exit_code}" -ne 0 ]; then
+    echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
+    echo "Exiting with ${exit_code}"
+    exit "${exit_code}"
   fi
-  exist_any_result="$(exist_any "${fail_markers}")"
-  if [ "$(get_nth_item 0 "${exist_any_result}")" -ne 0 ]; then
-    failed=1
-    failed_marker="$(get_nth_item 1 "${exist_any_result}")"
-    break
-  fi
-  if [ "$(exist_all "${success_markers}")" -ne 0 ]; then
-    deployed=1
-    break
-  fi
-  attempts=$((attempts+1))
-  if [ "${attempts}" -ge "${deploy_check_attempts}" ]; then
-    timeout=1
-    break
-  fi
-  sleep "${DEPLOY_CHECK_INTERVAL}"
-done
 
-if [ "${deployed}" -ne 0 ]; then
-  echo "Detected completion of deployment with $(concat_all ", " "${success_markers}")"
-else
-  if [ "${failed}" -ne 0 ]; then
-    echo "Detected failed deployment with ${failed_marker}, stopping JBoss EAP"
-    exit_code=1
+  echo "Preparing JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
+  j2 --import-env="" --filters "/app/bin/filters.py" \
+    -o "${JBOSS_CONFIGURATION_FILE}" \
+    "/app/template/standalone.xml.j2"
+  exit_code=$?
+  if [ "${exit_code}" -ne 0 ]; then
+    echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
+    echo "Exiting with ${exit_code}"
+    exit "${exit_code}"
   fi
-  if [ "${timeout}" -ne 0 ]; then
-    echo "Deployment timeout ${DEPLOY_TIMEOUT} sec happened, stopping JBoss EAP"
-    exit_code=1
+
+  fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
+    ".failed" "${DEPLOYMENTS}")"
+  success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
+    ".deployed" "${DEPLOYMENTS}")"
+  deploy_check_attempts="$(int "$(calc \
+    "${DEPLOY_TIMEOUT}/${DEPLOY_CHECK_INTERVAL}")")"
+
+  rm_all "${fail_markers}"
+  rm_all "${success_markers}"
+
+  echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " \
+    "${fail_markers}") or all of $(concat_all ", " "${success_markers}")"
+
+  /opt/eap/bin/openshift-launch.sh "$@" &
+  jboss_pid=$!
+  exit_code=$?
+
+  trap "kill -HUP \"${jboss_pid}\"" HUP
+  trap "kill -TERM \"${jboss_pid}\"" INT
+  trap "kill -QUIT \"${jboss_pid}\"" QUIT
+  trap "kill -PIPE \"${jboss_pid}\"" PIPE
+  trap "kill -TERM \"${jboss_pid}\"" TERM
+
+  attempts=0
+  alive=1
+  deployed=0
+  failed=0
+  timeout=0
+  failed_marker=""
+  while true; do
+    if [ "$(pid_alive "${jboss_pid}")" -eq 0 ]; then
+      alive=0
+      break
+    fi
+    exist_any_result="$(exist_any "${fail_markers}")"
+    if [ "$(get_nth_item 0 "${exist_any_result}")" -ne 0 ]; then
+      failed=1
+      failed_marker="$(get_nth_item 1 "${exist_any_result}")"
+      break
+    fi
+    if [ "$(exist_all "${success_markers}")" -ne 0 ]; then
+      deployed=1
+      break
+    fi
+    attempts=$((attempts+1))
+    if [ "${attempts}" -ge "${deploy_check_attempts}" ]; then
+      timeout=1
+      break
+    fi
+    sleep "${DEPLOY_CHECK_INTERVAL}"
+  done
+
+  if [ "${deployed}" -ne 0 ]; then
+    echo "Detected completion of deployment with $(concat_all ", " \
+      "${success_markers}")"
+  else
+    if [ "${failed}" -ne 0 ]; then
+      echo "Detected failed deployment with ${failed_marker}, stopping JBoss EAP"
+      exit_code=1
+    fi
+    if [ "${timeout}" -ne 0 ]; then
+      echo "Deployment timeout ${DEPLOY_TIMEOUT} sec happened, stopping JBoss EAP"
+      exit_code=1
+    fi
+    if [ "${alive}" -ne 0 ]; then
+      kill -TERM "${jboss_pid}"
+      alive=0
+    fi
   fi
+
   if [ "${alive}" -ne 0 ]; then
-    kill -TERM "${jboss_pid}"
-    alive=0
+    wait "${jboss_pid}"
   fi
-fi
 
-if [ "${alive}" -ne 0 ]; then
+  trap - HUP INT QUIT PIPE TERM
   wait "${jboss_pid}"
-fi
+  jboss_exit_code=$?
+  if [ "${exit_code}" -eq 0 ]; then
+    exit_code="${jboss_exit_code}"
+  fi
 
-trap - HUP INT QUIT PIPE TERM
-wait "${jboss_pid}"
-jboss_exit_code=$?
-if [ "${exit_code}" -eq 0 ]; then
-  exit_code="${jboss_exit_code}"
-fi
+  echo "Exiting with ${exit_code}"
+  exit "${exit_code}"
+}
 
-echo "Exiting with ${exit_code}"
-exit "${exit_code}"
+main "$@"
