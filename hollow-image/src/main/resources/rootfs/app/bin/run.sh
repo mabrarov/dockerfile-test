@@ -245,7 +245,7 @@ function main() {
   fi
 
   echo "Exiting with ${exit_code}"
-  exit "${exit_code}"
+  return "${exit_code}"
 }
 
 main "$@"
