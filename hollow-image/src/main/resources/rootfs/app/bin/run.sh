@@ -142,7 +142,9 @@ function main() {
   exit_code=0
 
   echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
-  j2 --import-env="" --filters "/app/bin/filters.py" -o "${APPLICATION_CONFIGURATION_FILE}" "/app/template/application.properties.j2"
+  j2 --import-env="" --filters "/app/bin/filters.py" \
+    -o "${APPLICATION_CONFIGURATION_FILE}" \
+    "/app/template/application.properties.j2"
   exit_code=$?
   if [ "${exit_code}" -ne 0 ]; then
     echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
@@ -151,7 +153,9 @@ function main() {
   fi
 
   echo "Preparing JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
-  j2 --import-env="" --filters "/app/bin/filters.py" -o "${JBOSS_CONFIGURATION_FILE}" "/app/template/standalone.xml.j2"
+  j2 --import-env="" --filters "/app/bin/filters.py" \
+    -o "${JBOSS_CONFIGURATION_FILE}" \
+    "/app/template/standalone.xml.j2"
   exit_code=$?
   if [ "${exit_code}" -ne 0 ]; then
     echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
@@ -159,14 +163,18 @@ function main() {
     exit "${exit_code}"
   fi
 
-  fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".failed" "${DEPLOYMENTS}")"
-  success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" ".deployed" "${DEPLOYMENTS}")"
-  deploy_check_attempts="$(int "$(calc "${DEPLOY_TIMEOUT}/${DEPLOY_CHECK_INTERVAL}")")"
+  fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
+    ".failed" "${DEPLOYMENTS}")"
+  success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
+    ".deployed" "${DEPLOYMENTS}")"
+  deploy_check_attempts="$(int "$(calc \
+    "${DEPLOY_TIMEOUT}/${DEPLOY_CHECK_INTERVAL}")")"
 
   rm_all "${fail_markers}"
   rm_all "${success_markers}"
 
-  echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " "${fail_markers}") or all of $(concat_all ", " "${success_markers}")"
+  echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " \
+    "${fail_markers}") or all of $(concat_all ", " "${success_markers}")"
 
   /opt/eap/bin/openshift-launch.sh "$@" &
   jboss_pid=$!
@@ -208,7 +216,8 @@ function main() {
   done
 
   if [ "${deployed}" -ne 0 ]; then
-    echo "Detected completion of deployment with $(concat_all ", " "${success_markers}")"
+    echo "Detected completion of deployment with $(concat_all ", " \
+      "${success_markers}")"
   else
     if [ "${failed}" -ne 0 ]; then
       echo "Detected failed deployment with ${failed_marker}, stopping JBoss EAP"
