@@ -31,13 +31,13 @@ matrix:
   include:
     # OpenJDK 11
     - dist: bionic
-      env: RELEASE_JOB=1
       jdk: openjdk11
     # Oracle JDK 11
     - dist: trusty
       jdk: oraclejdk11
     # OpenJDK 8
     - dist: trusty
+      env: RELEASE_JOB=1
       jdk: openjdk8
     # Oracle JDK 8
     - dist: trusty
@@ -50,7 +50,8 @@ install: skip
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
-  - mvn --batch-mode clean package
+  - mvn --batch-mode clean package -Ddockerfile.googleContainerRegistryEnabled=false
+  - docker images
 
 deploy:
   skip_cleanup: true
