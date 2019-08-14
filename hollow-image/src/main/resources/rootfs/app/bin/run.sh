@@ -16,15 +16,15 @@
 # limitations under the License.
 #
 
-function calc() {
+calc() {
   awk "BEGIN{print $*}"
 }
 
-function int() {
+int() {
   awk "BEGIN{printf \"%.0f\", $*}"
 }
 
-function split_by_colon {
+split_by_colon() {
   array="${1}"
   if [ "${array}" = "" ]; then
     return
@@ -63,20 +63,20 @@ function split_by_colon {
   done
 }
 
-function rm_all {
+rm_all() {
   array="${1}"
   for f in $(split_by_colon "${array}"); do
     rm -f "${f}"
   done
 }
 
-function get_nth_item {
+get_nth_item() {
   index="${1}"
   array="${2}"
   split_by_colon "${array}" "${index}" "${index}"
 }
 
-function add_prefix_and_postfix {
+add_prefix_and_postfix() {
   prefix="${1}"
   postfix="${2}"
   array="${3}"
@@ -92,7 +92,7 @@ function add_prefix_and_postfix {
   echo "${result}"
 }
 
-function pid_alive {
+pid_alive() {
   pid="${1}"
   if ps -p "${pid}" &> /dev/null; then
     echo 1
@@ -101,7 +101,7 @@ function pid_alive {
   fi
 }
 
-function concat_all {
+concat_all() {
   delimiter="${1}"
   array="${2}"
   first=1
@@ -116,7 +116,7 @@ function concat_all {
   echo "${result}"
 }
 
-function exist_any {
+exist_any() {
   array="${1}"
   for s in $(split_by_colon "${array}"); do
     if [ -f "${s}" ] || [ -d "${s}" ]; then
@@ -127,7 +127,7 @@ function exist_any {
   echo 0
 }
 
-function exist_all {
+exist_all() {
   array="${1}"
   for s in $(split_by_colon "${array}"); do
     if ! [ -f "${s}" ] && ! [ -d "${s}" ]; then
@@ -138,7 +138,7 @@ function exist_all {
   echo 1
 }
 
-function main() {
+main() {
   exit_code=0
 
   echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
