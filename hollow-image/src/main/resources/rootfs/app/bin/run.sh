@@ -94,7 +94,7 @@ add_prefix_and_postfix() {
 
 pid_alive() {
   pid="${1}"
-  if ps -p "${pid}" &> /dev/null; then
+  if ps -p "${pid}" > /dev/null 2>&1; then
     echo 1
   else
     echo 0
