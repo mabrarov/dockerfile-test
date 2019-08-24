@@ -180,10 +180,15 @@ main() {
   jboss_pid=$!
   exit_code=$?
 
+  # shellcheck disable=SC2064
   trap "kill -HUP \"${jboss_pid}\"" HUP
+  # shellcheck disable=SC2064
   trap "kill -TERM \"${jboss_pid}\"" INT
+  # shellcheck disable=SC2064
   trap "kill -QUIT \"${jboss_pid}\"" QUIT
+  # shellcheck disable=SC2064
   trap "kill -PIPE \"${jboss_pid}\"" PIPE
+  # shellcheck disable=SC2064
   trap "kill -TERM \"${jboss_pid}\"" TERM
 
   attempts=0
