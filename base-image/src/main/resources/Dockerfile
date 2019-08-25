@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-23
+FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-23.1561731010
 
 USER root
 
@@ -35,7 +35,7 @@ RUN echo "Enabling rhel-7-server-rpms YUM repository, requires Docker host with 
     echo "Installing Jinja2 Command-Line Tool (j2cli)..." && \
     yum install -y python-jinja2 && \
     yum install -y python2-pyyaml && \
-    pip install --no-cache-dir j2cli[yaml]==@j2cli.version@ && \
+    pip install --no-cache-dir --disable-pip-version j2cli[yaml]==@j2cli.version@ && \
     echo "j2cli installed" && \
     j2 --version && \
     echo "Cleaning YUM cache" && \
