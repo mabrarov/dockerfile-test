@@ -26,20 +26,76 @@
     <packaging>pom</packaging>
 
     <properties>
+        <base-image.groupId>org.mabrarov.dockerfile-test</base-image.groupId>
+        <base-image.artifactId>base-image</base-image.artifactId>
+
         <dockerfile.repository>abrarov/dockerfile-test-hollow</dockerfile.repository>
         <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
+
+        <base-image.docker-info.directory>${project.build.directory}/base-image</base-image.docker-info.directory>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.mabrarov.dockerfile-test</groupId>
-            <artifactId>base-image</artifactId>
+            <groupId>${base-image.groupId}</groupId>
+            <artifactId>${base-image.artifactId}</artifactId>
             <classifier>docker-info</classifier>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-base-image-docker-info</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${base-image.groupId}</groupId>
+                                    <artifactId>${base-image.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                    <classifier>docker-info</classifier>
+                                    <outputDirectory>${base-image.docker-info.directory}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>read-base-image-name</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <properties>
+                                <repository-file>${base-image.docker-info.directory}/META-INF/docker/${base-image.groupId}/${base-image.artifactId}/repository</repository-file>
+                                <tag-file>${base-image.docker-info.directory}/META-INF/docker/${base-image.groupId}/${base-image.artifactId}/tag</tag-file>
+                            </properties>
+                            <source>
+                                new File(project.properties['repository-file']).withReader {
+                                    project.properties['base-image.repository'] = it.readLine()
+                                }
+                                new File(project.properties['tag-file']).withReader {
+                                    project.properties['base-image.version'] = it.readLine()
+                                }
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>

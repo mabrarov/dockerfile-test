@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM abrarov/dockerfile-test-base:@project.version@
+FROM @base-image.repository@:@base-image.version@
 
 CMD ["/app/bin/run.sh"]
 
