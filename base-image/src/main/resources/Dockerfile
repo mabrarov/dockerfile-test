@@ -25,7 +25,7 @@ RUN echo "Installing pip..." && \
     echo "pip installed" && \
     pip --version && \
     echo "Installing Jinja2 Command-Line Tool (j2cli)..." && \
-    pip install --no-cache-dir j2cli[yaml]==@j2cli.version@ && \
+    pip install --no-cache-dir --disable-pip-version-check j2cli[yaml]==@j2cli.version@ && \
     echo "j2cli installed" && \
     j2 --version
 
