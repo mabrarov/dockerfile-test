@@ -94,7 +94,7 @@ add_prefix_and_postfix() {
 
 pid_alive() {
   pid="${1}"
-  if ps -p "${pid}" &> /dev/null; then
+  if ps -p "${pid}" > /dev/null 2>&1; then
     echo 1
   else
     echo 0
@@ -180,10 +180,15 @@ main() {
   jboss_pid=$!
   exit_code=$?
 
+  # shellcheck disable=SC2064
   trap "kill -HUP \"${jboss_pid}\"" HUP
+  # shellcheck disable=SC2064
   trap "kill -TERM \"${jboss_pid}\"" INT
+  # shellcheck disable=SC2064
   trap "kill -QUIT \"${jboss_pid}\"" QUIT
+  # shellcheck disable=SC2064
   trap "kill -PIPE \"${jboss_pid}\"" PIPE
+  # shellcheck disable=SC2064
   trap "kill -TERM \"${jboss_pid}\"" TERM
 
   attempts=0
