@@ -25,6 +25,7 @@ services:
 
 env:
   global:
+    - DOCKERHUB_USER: abrarov
     - RELEASE_JOB: 0
 
 matrix:
