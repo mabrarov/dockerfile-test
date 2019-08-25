@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-23
+FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-23.1561731010
 
 USER root
 
@@ -25,7 +25,7 @@ RUN echo "Installing pip..." && \
     echo "pip installed" && \
     pip --version && \
     echo "Installing Jinja2 Command-Line Tool (j2cli)..." && \
-    pip install --no-cache-dir j2cli[yaml]==@j2cli.version@ && \
+    pip install --no-cache-dir --disable-pip-version-check j2cli[yaml]==@j2cli.version@ && \
     echo "j2cli installed" && \
     j2 --version
 
