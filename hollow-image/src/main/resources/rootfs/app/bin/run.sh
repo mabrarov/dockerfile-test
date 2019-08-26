@@ -176,7 +176,7 @@ main() {
   echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " \
     "${fail_markers}") or all of $(concat_all ", " "${success_markers}")"
 
-  /opt/eap/bin/openshift-launch.sh "$@" &
+  /opt/eap/bin/openshift-launch.sh "${@}" &
   jboss_pid="${!}"
   exit_code="${?}"
 
@@ -253,4 +253,4 @@ main() {
   return "${exit_code}"
 }
 
-main "$@"
+main "${@}"
