@@ -44,15 +44,14 @@ matrix:
     - dist: trusty
       jdk: oraclejdk8
 
-before_install:
-  - echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
+before_install: |
+  echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
 
 install: skip
 
-script:
-  - cd ${TRAVIS_BUILD_DIR}
-  - mvn --batch-mode clean package -Ddockerfile.googleContainerRegistryEnabled=false
-  - docker images
+script: |
+  mvn -f "${TRAVIS_BUILD_DIR}/pom.xml" --batch-mode clean package &&
+  docker images
 
 deploy:
   skip_cleanup: true

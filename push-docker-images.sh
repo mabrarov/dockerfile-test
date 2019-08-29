@@ -4,11 +4,6 @@ set -e
 
 echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
 
-mvn -f base-image/pom.xml dockerfile:push
-mvn -f base-image/pom.xml dockerfile:push -Ddockerfile.tag=latest
-
-mvn -f hollow-image/pom.xml dockerfile:push
-mvn -f hollow-image/pom.xml dockerfile:push -Ddockerfile.tag=latest
-
-mvn -f app-image/pom.xml dockerfile:push
-mvn -f app-image/pom.xml dockerfile:push -Ddockerfile.tag=latest
+mvn -f base-image/pom.xml docker:push
+mvn -f hollow-image/pom.xml docker:push
+mvn -f app-image/pom.xml docker:push
