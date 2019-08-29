@@ -46,7 +46,7 @@ matrix:
       jdk: oraclejdk8
 
 before_install: |
-  echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
+  travis_retry docker login -u "${REDHAT_USER}" -p "${REDHAT_PASSWORD}" registry.redhat.io
 
 install: skip
 
