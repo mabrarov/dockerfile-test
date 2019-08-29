@@ -1,6 +1,7 @@
 # Test of Dockerfile Maven plugin
 
-[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/releases/latest) [![License](https://img.shields.io/github/license/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
+[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/releases/latest)
+[![License](https://img.shields.io/github/license/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
 
 Branch | Linux
 -------|-------
@@ -42,10 +43,19 @@ Red Hat Docker image during build:
 docker login registry.redhat.io
 ```
 
-Command for building:
+If remote Docker engine is used then `DOCKER_HOST` environment variable should point to that engine
+and include schema, like `tcp://docker-host:2375` instead of `docker-host:2375`.
+
+Building with [Maven Wrapper](https://github.com/takari/maven-wrapper):
 
 ```bash
-mvn clean package
+./mvnw clean package
+```
+
+or on Windows:
+
+```bash
+mvnw.cmd clean package
 ```
 
 ## Running
@@ -80,4 +90,4 @@ expected output looks like:
 Sat Jul  6 15:42:38 MSK 2019
 </body>
 </html>
-``` 
+```
