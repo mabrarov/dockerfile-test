@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.0.8</version>
+        <version>1.0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-image</artifactId>
@@ -33,7 +33,6 @@
         <j2cli.version>0.3.10</j2cli.version>
 
         <dockerfile.repository>abrarov/dockerfile-test-base</dockerfile.repository>
-        <dockerfile.contextDirectory>${project.build.directory}/context</dockerfile.contextDirectory>
     </properties>
 
     <build>
@@ -73,32 +72,29 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${dockerfile.repository}</name>
+                            <build>
+                                <contextDir>${project.build.directory}/context</contextDir>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <cleanup>none</cleanup>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
                         </goals>
-                        <configuration>
-                            <skipDockerInfo>true</skipDockerInfo>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>tag-docker-image</id>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <tag>${project.version}</tag>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>push-docker-image</id>
-                        <goals>
-                            <goal>push</goal>
-                        </goals>
+                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>

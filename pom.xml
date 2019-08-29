@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mabrarov.dockerfile-test</groupId>
     <artifactId>dockerfile-test</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <scm>
@@ -16,8 +16,7 @@
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <dockerfile-maven-plugin.version>1.4.10</dockerfile-maven-plugin.version>
-        <dockerfile.build.pullNewerImage>false</dockerfile.build.pullNewerImage>
+        <docker-maven-plugin.version>0.31.0</docker-maven-plugin.version>
     </properties>
 
     <modules>
@@ -57,19 +56,19 @@
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>base-image</artifactId>
                 <version>${project.version}</version>
-                <classifier>docker-info</classifier>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>hollow-image</artifactId>
                 <version>${project.version}</version>
-                <classifier>docker-info</classifier>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>app-image</artifactId>
                 <version>${project.version}</version>
-                <classifier>docker-info</classifier>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -135,9 +134,9 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <version>${dockerfile-maven-plugin.version}</version>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
