@@ -27,6 +27,7 @@ env:
   global:
     - DOCKERHUB_USER: abrarov
     - RELEASE_JOB: 0
+    - DOCKER_PUSH_RETRIES: 10
 
 matrix:
   include:
