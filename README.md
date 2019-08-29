@@ -8,7 +8,8 @@ Branch | Linux
 [master](https://github.com/mabrarov/dockerfile-test/tree/master) | [![Travis CI build status](https://travis-ci.org/mabrarov/dockerfile-test.svg?branch=master)](https://travis-ci.org/mabrarov/dockerfile-test)
 [develop](https://github.com/mabrarov/dockerfile-test/tree/develop) | [![Travis CI build status](https://travis-ci.org/mabrarov/dockerfile-test.svg?branch=develop)](https://travis-ci.org/mabrarov/dockerfile-test)
 
-Test of [Dockerfile Maven plugin](https://github.com/spotify/dockerfile-maven), which
+Test of [fabric8io/docker-maven-plugin](https://github.com/fabric8io/docker-maven-plugin). 
+This test:
 
 * solves [The backlash of chmod/chown/mv in your Dockerfile](https://medium.com/@lmakarov/the-backlash-of-chmod-chown-mv-in-your-dockerfile-f12fe08c0b55) 
   issue in the part of location and permissions by using Maven Assembly plugin and TAR format, i.e. works correctly and
