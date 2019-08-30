@@ -38,8 +38,8 @@
         <dependency>
             <groupId>org.mabrarov.dockerfile-test</groupId>
             <artifactId>hollow-image</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
+            <type>tar</type>
+            <classifier>docker</classifier>
         </dependency>
     </dependencies>
 
@@ -79,19 +79,6 @@
                             </descriptors>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>archive-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context-archive.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -117,6 +104,13 @@
                         <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>archive-docker-context</id>
+                        <goals>
+                            <goal>source</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
