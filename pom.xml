@@ -56,19 +56,22 @@
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>base-image</artifactId>
                 <version>${project.version}</version>
-                <type>pom</type>
+                <type>tar</type>
+                <classifier>docker</classifier>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>hollow-image</artifactId>
                 <version>${project.version}</version>
-                <type>pom</type>
+                <type>tar</type>
+                <classifier>docker</classifier>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>app-image</artifactId>
                 <version>${project.version}</version>
-                <type>pom</type>
+                <type>tar</type>
+                <classifier>docker</classifier>
             </dependency>
         </dependencies>
     </dependencyManagement>
