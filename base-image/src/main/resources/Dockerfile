@@ -43,6 +43,6 @@ RUN echo "Enabling rhel-7-server-rpms YUM repository, requires Docker host with 
 
 USER 185
 
-LABEL name="@dockerfile.repository@" \
+LABEL name="@docker.repository@" \
     version="@project.version@" \
     git-commit="@buildNumber@"

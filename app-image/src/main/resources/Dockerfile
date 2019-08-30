@@ -20,6 +20,6 @@ ADD rootfs.tar /
 
 ENV DEPLOYMENTS="${DEPLOYMENTS}:ear.ear"
 
-LABEL name="@dockerfile.repository@" \
+LABEL name="@docker.repository@" \
     version="@project.version@" \
     git-commit="@buildNumber@"

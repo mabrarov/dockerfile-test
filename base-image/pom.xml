@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-image</artifactId>
@@ -28,7 +28,8 @@
     <properties>
         <j2cli.version>0.3.10</j2cli.version>
 
-        <dockerfile.repository>abrarov/dockerfile-test-base</dockerfile.repository>
+        <docker.repository>abrarov/dockerfile-test-base</docker.repository>
+        <docker.verbose>true</docker.verbose>
     </properties>
 
     <build>
@@ -73,7 +74,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>${dockerfile.repository}</name>
+                            <name>${docker.repository}</name>
                             <build>
                                 <contextDir>${project.build.directory}/context</contextDir>
                                 <tags>
@@ -87,6 +88,7 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
                         </goals>
