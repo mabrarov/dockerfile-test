@@ -26,7 +26,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <dockerfile.repository>abrarov/dockerfile-test-hollow</dockerfile.repository>
+        <docker.repository>abrarov/dockerfile-test-hollow</docker.repository>
     </properties>
 
     <dependencies>
@@ -95,7 +95,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>${dockerfile.repository}</name>
+                            <name>${docker.repository}</name>
                             <build>
                                 <contextDir>${project.build.directory}/context</contextDir>
                                 <tags>

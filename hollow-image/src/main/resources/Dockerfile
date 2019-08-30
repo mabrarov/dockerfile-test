@@ -29,6 +29,6 @@ ENV ENABLE_ACCESS_LOG="true" \
     DEPLOY_CHECK_INTERVAL=0.5 \
     GREETING="Hello from j2cli"
 
-LABEL name="@dockerfile.repository@" \
+LABEL name="@docker.repository@" \
     version="@project.version@" \
     git-commit="@buildNumber@"
