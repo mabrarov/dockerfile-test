@@ -27,7 +27,7 @@ main() {
 
   mvn -f base-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
   mvn -f hollow-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
-  mvn -f app-image/pom.xml--batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
+  mvn -f app-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
 }
 
 main "${@}"
