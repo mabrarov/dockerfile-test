@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.1.2-SNAPSHOT</version>
+        <version>1.1.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-image</artifactId>
@@ -57,19 +57,6 @@
                             </descriptors>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>archive-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context-archive.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -95,6 +82,13 @@
                         <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>archive-docker-context</id>
+                        <goals>
+                            <goal>source</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
