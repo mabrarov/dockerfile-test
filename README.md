@@ -1,13 +1,15 @@
-# Test of Dockerfile Maven plugin
+# Test of docker-maven-plugin
 
-[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/releases/latest) [![License](https://img.shields.io/github/license/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
+[![Release](https://img.shields.io/github/release/mabrarov/dockerfile-test)](https://github.com/mabrarov/dockerfile-test/releases/latest)
+[![License](https://img.shields.io/github/license/mabrarov/dockerfile-test.svg)](https://github.com/mabrarov/dockerfile-test/tree/master/LICENSE)
 
 Branch | Linux
 -------|-------
 [master](https://github.com/mabrarov/dockerfile-test/tree/master) | [![Travis CI build status](https://travis-ci.org/mabrarov/dockerfile-test.svg?branch=master)](https://travis-ci.org/mabrarov/dockerfile-test)
 [develop](https://github.com/mabrarov/dockerfile-test/tree/develop) | [![Travis CI build status](https://travis-ci.org/mabrarov/dockerfile-test.svg?branch=develop)](https://travis-ci.org/mabrarov/dockerfile-test)
 
-Test of [Dockerfile Maven plugin](https://github.com/spotify/dockerfile-maven), which
+Test of [fabric8io/docker-maven-plugin](https://github.com/fabric8io/docker-maven-plugin). 
+This test:
 
 * solves [The backlash of chmod/chown/mv in your Dockerfile](https://medium.com/@lmakarov/the-backlash-of-chmod-chown-mv-in-your-dockerfile-f12fe08c0b55) 
   issue by using Maven Assembly plugin and TAR format, i.e. works correctly and uniformly when building 
@@ -42,10 +44,19 @@ Red Hat Docker image during build:
 docker login registry.redhat.io
 ```
 
-Command for building:
+If remote Docker engine is used then `DOCKER_HOST` environment variable should point to that engine
+and include schema, like `tcp://docker-host:2375` instead of `docker-host:2375`.
+
+Building with [Maven Wrapper](https://github.com/takari/maven-wrapper):
 
 ```bash
-mvn clean package
+./mvnw clean package
+```
+
+or on Windows:
+
+```bash
+mvnw.cmd clean package
 ```
 
 ## Running
@@ -80,4 +91,4 @@ expected output looks like:
 Sat Jul  6 15:42:38 MSK 2019
 </body>
 </html>
-``` 
+```

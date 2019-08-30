@@ -25,7 +25,9 @@ services:
 
 env:
   global:
+    - DOCKERHUB_USER: abrarov
     - RELEASE_JOB: 0
+    - DOCKER_PUSH_RETRIES: 10
 
 matrix:
   include:
@@ -43,15 +45,14 @@ matrix:
     - dist: trusty
       jdk: oraclejdk8
 
-before_install:
-  - echo "${REDHAT_PASSWORD}" | docker login -u "${REDHAT_USER}" registry.redhat.io --password-stdin
+before_install: |
+  travis_retry docker login -u "${REDHAT_USER}" -p "${REDHAT_PASSWORD}" registry.redhat.io
 
 install: skip
 
-script:
-  - cd ${TRAVIS_BUILD_DIR}
-  - mvn --batch-mode clean package -Ddockerfile.googleContainerRegistryEnabled=false
-  - docker images
+script: |
+  mvn -f "${TRAVIS_BUILD_DIR}/pom.xml" --batch-mode clean package &&
+  docker images
 
 deploy:
   skip_cleanup: true
