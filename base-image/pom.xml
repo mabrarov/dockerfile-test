@@ -33,7 +33,6 @@
         <j2cli.version>0.3.10</j2cli.version>
 
         <docker.repository>abrarov/dockerfile-test-base</docker.repository>
-        <docker.verbose>true</docker.verbose>
     </properties>
 
     <build>
