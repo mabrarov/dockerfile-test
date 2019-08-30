@@ -145,7 +145,7 @@ main() {
   j2 --import-env="" --filters "/app/bin/filters.py" \
     -o "${APPLICATION_CONFIGURATION_FILE}" \
     "/app/template/application.properties.j2"
-  exit_code=$?
+  exit_code="${?}"
   if [ "${exit_code}" -ne 0 ]; then
     echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
     echo "Exiting with ${exit_code}"
@@ -156,7 +156,7 @@ main() {
   j2 --import-env="" --filters "/app/bin/filters.py" \
     -o "${JBOSS_CONFIGURATION_FILE}" \
     "/app/template/standalone.xml.j2"
-  exit_code=$?
+  exit_code="${?}"
   if [ "${exit_code}" -ne 0 ]; then
     echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
     echo "Exiting with ${exit_code}"
@@ -176,9 +176,9 @@ main() {
   echo "Waiting during ${DEPLOY_TIMEOUT} sec for one of $(concat_all ", " \
     "${fail_markers}") or all of $(concat_all ", " "${success_markers}")"
 
-  /opt/eap/bin/openshift-launch.sh "$@" &
-  jboss_pid=$!
-  exit_code=$?
+  /opt/eap/bin/openshift-launch.sh "${@}" &
+  jboss_pid="${!}"
+  exit_code="${?}"
 
   # shellcheck disable=SC2064
   trap "kill -HUP \"${jboss_pid}\"" HUP
@@ -244,7 +244,7 @@ main() {
 
   trap - HUP INT QUIT PIPE TERM
   wait "${jboss_pid}"
-  jboss_exit_code=$?
+  jboss_exit_code="${?}"
   if [ "${exit_code}" -eq 0 ]; then
     exit_code="${jboss_exit_code}"
   fi
@@ -253,4 +253,4 @@ main() {
   return "${exit_code}"
 }
 
-main "$@"
+main "${@}"
