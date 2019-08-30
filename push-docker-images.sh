@@ -25,9 +25,9 @@ travis_retry() {
 main() {
   travis_retry docker login -u "${DOCKERHUB_USER}" -p "${DOCKERHUB_PASSWORD}"
 
-  mvn -f base-image/pom.xml docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
-  mvn -f hollow-image/pom.xml docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
-  mvn -f app-image/pom.xml docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
+  mvn -f base-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
+  mvn -f hollow-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
+  mvn -f app-image/pom.xml--batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
 }
 
 main "${@}"
