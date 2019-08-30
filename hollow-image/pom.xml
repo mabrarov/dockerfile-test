@@ -19,14 +19,14 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>hollow-image</artifactId>
     <packaging>pom</packaging>
 
     <properties>
-        <dockerfile.repository>abrarov/dockerfile-test-hollow</dockerfile.repository>
+        <docker.repository>abrarov/dockerfile-test-hollow</docker.repository>
     </properties>
 
     <dependencies>
@@ -95,7 +95,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>${dockerfile.repository}</name>
+                            <name>${docker.repository}</name>
                             <build>
                                 <contextDir>${project.build.directory}/context</contextDir>
                                 <tags>
@@ -109,6 +109,7 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
                         </goals>
