@@ -33,62 +33,13 @@
         <dependency>
             <groupId>org.mabrarov.dockerfile-test</groupId>
             <artifactId>base-image</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
+            <type>tar</type>
+            <classifier>docker</classifier>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-rootfs</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>rootfs</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <attach>false</attach>
-                            <descriptors>
-                                <descriptor>src/assembly/rootfs.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>build-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>context</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <attach>false</attach>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>archive-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context-archive.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -97,12 +48,19 @@
                         <image>
                             <name>${docker.repository}</name>
                             <build>
-                                <contextDir>${project.build.directory}/context</contextDir>
+                                <dockerFile>${project.basedir}/src/main/resources/Dockerfile</dockerFile>
+                                <filter>@</filter>
                                 <tags>
                                     <tag>latest</tag>
                                     <tag>${project.version}</tag>
                                 </tags>
                                 <cleanup>none</cleanup>
+                                <assembly>
+                                    <name>rootfs</name>
+                                    <descriptor>${project.basedir}/src/assembly/rootfs.xml</descriptor>
+                                    <mode>tar</mode>
+                                    <user>root:root</user>
+                                </assembly>
                             </build>
                         </image>
                     </images>
@@ -112,6 +70,13 @@
                         <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>archive-docker-context</id>
+                        <goals>
+                            <goal>source</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>

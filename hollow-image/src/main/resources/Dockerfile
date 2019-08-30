@@ -18,7 +18,7 @@ FROM abrarov/dockerfile-test-base:@project.version@
 
 CMD ["/app/bin/run.sh"]
 
-ADD rootfs.tar /
+COPY rootfs /
 
 ENV ENABLE_ACCESS_LOG="true" \
     JBOSS_CONFIGURATION_FILE="${JBOSS_HOME}/standalone/configuration/standalone-openshift.xml" \

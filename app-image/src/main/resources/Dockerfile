@@ -16,7 +16,7 @@
 
 FROM abrarov/dockerfile-test-hollow:@project.version@
 
-ADD rootfs.tar /
+COPY rootfs /
 
 ENV DEPLOYMENTS="${DEPLOYMENTS}:ear.ear"
 

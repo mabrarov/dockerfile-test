@@ -39,40 +39,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>context</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <attach>false</attach>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>archive-docker-context</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>src/assembly/docker-context-archive.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
@@ -80,7 +46,8 @@
                         <image>
                             <name>${docker.repository}</name>
                             <build>
-                                <contextDir>${project.build.directory}/context</contextDir>
+                                <dockerFile>${project.basedir}/src/main/resources/Dockerfile</dockerFile>
+                                <filter>@</filter>
                                 <tags>
                                     <tag>latest</tag>
                                     <tag>${project.version}</tag>
@@ -95,6 +62,13 @@
                         <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>archive-docker-context</id>
+                        <goals>
+                            <goal>source</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
