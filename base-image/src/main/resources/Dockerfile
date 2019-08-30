@@ -31,6 +31,6 @@ RUN echo "Installing pip..." && \
 
 USER 185
 
-LABEL name="@dockerfile.repository@" \
+LABEL name="@docker.repository@" \
     version="@project.version@" \
     git-commit="@buildNumber@"
