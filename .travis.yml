@@ -32,6 +32,9 @@ env:
 
 matrix:
   include:
+    # OpenJDK 12
+    - dist: bionic
+      jdk: openjdk12
     # OpenJDK 11
     - dist: bionic
       jdk: openjdk11
