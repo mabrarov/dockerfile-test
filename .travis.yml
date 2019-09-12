@@ -26,11 +26,15 @@ services:
 env:
   global:
     - DOCKERHUB_USER: abrarov
+    - MAVEN_WRAPPER: 0
     - RELEASE_JOB: 0
     - DOCKER_PUSH_RETRIES: 10
 
 matrix:
   include:
+    # OpenJDK 12
+    - dist: bionic
+      jdk: openjdk12
     # OpenJDK 11
     - dist: bionic
       jdk: openjdk11
@@ -40,6 +44,10 @@ matrix:
     # OpenJDK 8
     - dist: trusty
       env: RELEASE_JOB=1
+      jdk: openjdk8
+    # OpenJDK 8 with Maven Wrapper
+    - dist: trusty
+      env: MAVEN_WRAPPER=1
       jdk: openjdk8
     # Oracle JDK 8
     - dist: trusty
@@ -51,7 +59,14 @@ before_install: |
 install: skip
 
 script: |
-  mvn -f "${TRAVIS_BUILD_DIR}/pom.xml" --batch-mode clean package &&
+  if [[ "${MAVEN_WRAPPER}" -ne 0 ]]; then
+    build_cmd="${TRAVIS_BUILD_DIR}/mvnw"
+  else
+    build_cmd="mvn";
+  fi &&
+  build_cmd="\"${build_cmd}\" -f \"${TRAVIS_BUILD_DIR}/pom.xml\" --batch-mode clean package" &&
+  echo "Building with: ${build_cmd}" &&
+  eval "${build_cmd}" &&
   docker images
 
 deploy:
