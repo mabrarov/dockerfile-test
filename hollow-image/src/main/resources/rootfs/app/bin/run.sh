@@ -16,6 +16,8 @@
 # limitations under the License.
 #
 
+set -e
+
 calc() {
   awk "BEGIN{print $*}"
 }
@@ -138,31 +140,7 @@ exist_all() {
   echo 1
 }
 
-main() {
-  exit_code=0
-
-  echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
-  j2 --import-env="" --filters "/app/bin/filters.py" \
-    -o "${APPLICATION_CONFIGURATION_FILE}" \
-    "/app/template/application.properties.j2"
-  exit_code="${?}"
-  if [ "${exit_code}" -ne 0 ]; then
-    echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
-    echo "Exiting with ${exit_code}"
-    exit "${exit_code}"
-  fi
-
-  echo "Preparing JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
-  j2 --import-env="" --filters "/app/bin/filters.py" \
-    -o "${JBOSS_CONFIGURATION_FILE}" \
-    "/app/template/standalone.xml.j2"
-  exit_code="${?}"
-  if [ "${exit_code}" -ne 0 ]; then
-    echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
-    echo "Exiting with ${exit_code}"
-    exit "${exit_code}"
-  fi
-
+launch_deployments() {
   fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
     ".failed" "${DEPLOYMENTS}")"
   success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
@@ -178,7 +156,6 @@ main() {
 
   /opt/eap/bin/openshift-launch.sh "${@}" &
   jboss_pid="${!}"
-  exit_code="${?}"
 
   # shellcheck disable=SC2064
   trap "kill -HUP \"${jboss_pid}\"" HUP
@@ -220,6 +197,7 @@ main() {
     sleep "${DEPLOY_CHECK_INTERVAL}"
   done
 
+  exit_code=0
   if [ "${deployed}" -ne 0 ]; then
     echo "Detected completion of deployment with $(concat_all ", " \
       "${success_markers}")"
@@ -239,16 +217,45 @@ main() {
   fi
 
   if [ "${alive}" -ne 0 ]; then
-    wait "${jboss_pid}"
+    wait "${jboss_pid}" || true
   fi
 
   trap - HUP INT QUIT PIPE TERM
-  wait "${jboss_pid}"
-  jboss_exit_code="${?}"
+  jboss_exit_code=0
+  wait "${jboss_pid}" && jboss_exit_code=0 || jboss_exit_code="${?}"
   if [ "${exit_code}" -eq 0 ]; then
     exit_code="${jboss_exit_code}"
   fi
 
+  return "${exit_code}"
+}
+
+main() {
+  exit_code=0
+
+  echo "Preparing application configuration at ${APPLICATION_CONFIGURATION_FILE}"
+  j2 --import-env="" --filters "/app/bin/filters.py" \
+    -o "${APPLICATION_CONFIGURATION_FILE}" \
+    "/app/template/application.properties.j2" \
+    && exit_code=0 || exit_code="${?}"
+  if [ "${exit_code}" -ne 0 ]; then
+    echo "Failed to prepare application configuration at ${APPLICATION_CONFIGURATION_FILE}"
+    echo "Exiting with ${exit_code}"
+    return "${exit_code}"
+  fi
+
+  echo "Preparing JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
+  j2 --import-env="" --filters "/app/bin/filters.py" \
+    -o "${JBOSS_CONFIGURATION_FILE}" \
+    "/app/template/standalone.xml.j2" \
+    && exit_code=0 || exit_code="${?}"
+  if [ "${exit_code}" -ne 0 ]; then
+    echo "Failed to prepare JBoss EAP configuration at ${JBOSS_CONFIGURATION_FILE}"
+    echo "Exiting with ${exit_code}"
+    return "${exit_code}"
+  fi
+
+  launch_deployments "${@}" && exit_code=0 || exit_code="${?}"
   echo "Exiting with ${exit_code}"
   return "${exit_code}"
 }
