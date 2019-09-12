@@ -140,7 +140,7 @@ exist_all() {
   echo 1
 }
 
-launch_deployments() {
+run_deployments() {
   fail_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
     ".failed" "${DEPLOYMENTS}")"
   success_markers="$(add_prefix_and_postfix "${JBOSS_DEPLOYMENTS_DIR}/" \
@@ -255,7 +255,7 @@ main() {
     return "${exit_code}"
   fi
 
-  launch_deployments "${@}" && exit_code=0 || exit_code="${?}"
+  run_deployments "${@}" && exit_code=0 || exit_code="${?}"
   echo "Exiting with ${exit_code}"
   return "${exit_code}"
 }
