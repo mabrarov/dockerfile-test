@@ -31,4 +31,4 @@ ENV ENABLE_ACCESS_LOG="true" \
 
 LABEL name="@docker.repository@" \
     version="@project.version@" \
-    git-commit="@buildNumber@"
+    git-commit="@git.commit.id@"

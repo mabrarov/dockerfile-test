@@ -43,7 +43,7 @@
                 <executions>
                     <execution>
                         <id>build-docker-context</id>
-                        <phase>generate-resources</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>

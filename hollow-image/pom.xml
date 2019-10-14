@@ -61,7 +61,7 @@
                     </execution>
                     <execution>
                         <id>build-docker-context</id>
-                        <phase>generate-resources</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
@@ -108,6 +108,19 @@
                             <goal>source</goal>
                         </goals>
                         <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.zlika</groupId>
+                <artifactId>reproducible-build-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>strip-jar</id>
+                        <goals>
+                            <goal>strip-jar</goal>
+                        </goals>
+                        <phase>process-resources</phase>
                     </execution>
                 </executions>
             </plugin>

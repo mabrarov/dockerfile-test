@@ -18,6 +18,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <docker-maven-plugin.version>0.31.0</docker-maven-plugin.version>
         <docker.verbose>true</docker.verbose>
+        <reproducible.fixZipExternalFileAttributes>true</reproducible.fixZipExternalFileAttributes>
+        <reproducible.zipDateTime>${git.commit.time}</reproducible.zipDateTime>
     </properties>
 
     <modules>
@@ -81,9 +83,25 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <generateGitProperties>false</generateGitProperties>
+                        <offline>true</offline>
+                        <injectAllReactorProject>true</injectAllReactorProject>
+                        <runOnlyOnce>true</runOnlyOnce>
+                        <skipPoms>false</skipPoms>
+                        <dateFormat>yyyyMMddHHmmss</dateFormat>
+                        <dateFormatTimeZone>UTC</dateFormatTimeZone>
+                        <exlcudeProperties>
+                            <excludeProperty>git.closest.*</excludeProperty>
+                            <excludeProperty>git.total.*</excludeProperty>
+                            <excludeProperty>git.tags.*</excludeProperty>
+                            <excludeProperty>git.local.branch.*</excludeProperty>
+                            <excludeProperty>git.dirty</excludeProperty>
+                        </exlcudeProperties>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -118,7 +136,8 @@
                     <configuration>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
+                                <Reproducible-Build>true</Reproducible-Build>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -132,10 +151,16 @@
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
+                                <Reproducible-Build>true</Reproducible-Build>
                             </manifestEntries>
                         </archive>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>io.github.zlika</groupId>
+                    <artifactId>reproducible-build-maven-plugin</artifactId>
+                    <version>0.11</version>
                 </plugin>
                 <plugin>
                     <groupId>io.fabric8</groupId>
@@ -146,14 +171,27 @@
         </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>get-commit-hash</id>
                         <goals>
-                            <goal>create</goal>
+                            <goal>revision</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.zlika</groupId>
+                <artifactId>reproducible-build-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>strip-jar</id>
+                        <goals>
+                            <goal>strip-jar</goal>
+                        </goals>
+                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>

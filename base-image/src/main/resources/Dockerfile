@@ -33,4 +33,4 @@ USER 185
 
 LABEL name="@docker.repository@" \
     version="@project.version@" \
-    git-commit="@buildNumber@"
+    git-commit="@git.commit.id@"
