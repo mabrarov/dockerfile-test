@@ -31,7 +31,6 @@
         <python-pip.package.rpm.path>/tmp/${python-pip.package.filename}</python-pip.package.rpm.path>
 
         <j2cli.version>0.3.10</j2cli.version>
-
         <docker.repository>abrarov/dockerfile-test-base</docker.repository>
     </properties>
 

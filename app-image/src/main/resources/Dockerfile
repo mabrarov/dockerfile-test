@@ -22,4 +22,7 @@ ENV DEPLOYMENTS="${DEPLOYMENTS}:ear.ear"
 
 LABEL name="@docker.repository@" \
     version="@project.version@" \
-    git-commit="@git.commit.id@"
+    release="@project.version@" \
+    build-date="@git.commit.time@" \
+    vcs-type="git" \
+    vcs-ref="@git.commit.id@"
