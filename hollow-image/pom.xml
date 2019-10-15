@@ -33,8 +33,7 @@
         <dependency>
             <groupId>org.mabrarov.dockerfile-test</groupId>
             <artifactId>base-image</artifactId>
-            <type>tar</type>
-            <classifier>docker</classifier>
+            <type>pom</type>
         </dependency>
     </dependencies>
 

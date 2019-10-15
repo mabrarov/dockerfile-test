@@ -13,6 +13,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.buildNumber.getRevisionOnlyOnce>true</maven.buildNumber.getRevisionOnlyOnce>
+        <maven.buildNumber.timestampPropertyName>buildTimestamp</maven.buildNumber.timestampPropertyName>
+        <maven.buildNumber.timestampFormat>{0,date,yyyy-MM-dd'T'HH:mm:ssXXX}</maven.buildNumber.timestampFormat>
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -57,22 +60,13 @@
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>base-image</artifactId>
                 <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>hollow-image</artifactId>
                 <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.mabrarov.dockerfile-test</groupId>
-                <artifactId>app-image</artifactId>
-                <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -113,6 +107,18 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <git-commit>${buildNumber}</git-commit>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.3</version>
                     <configuration>
@@ -150,7 +156,7 @@
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>get-commit-hash</id>
+                        <id>create-build-number</id>
                         <goals>
                             <goal>create</goal>
                         </goals>
