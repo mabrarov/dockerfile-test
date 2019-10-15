@@ -32,6 +32,7 @@ USER 185
 LABEL name="@docker.repository@" \
     version="@project.version@" \
     release="@project.version@" \
-    build-date="@buildTimestamp@" \
+    build-date="@git.commit.time@" \
+    vcs-url="@git.remote.origin.url@" \
     vcs-type="git" \
-    vcs-ref="@buildNumber@"
+    vcs-ref="@git.commit.id@"

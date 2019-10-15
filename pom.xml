@@ -13,9 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.buildNumber.getRevisionOnlyOnce>true</maven.buildNumber.getRevisionOnlyOnce>
-        <maven.buildNumber.timestampPropertyName>buildTimestamp</maven.buildNumber.timestampPropertyName>
-        <maven.buildNumber.timestampFormat>{0,date,yyyy-MM-dd'T'HH:mm:ssXXX}</maven.buildNumber.timestampFormat>
+        <commit.dateFormat>yyyy-MM-dd'T'HH:mm:ssXXX</commit.dateFormat>
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -75,9 +73,25 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <generateGitProperties>false</generateGitProperties>
+                        <offline>true</offline>
+                        <injectAllReactorProject>true</injectAllReactorProject>
+                        <runOnlyOnce>true</runOnlyOnce>
+                        <skipPoms>false</skipPoms>
+                        <dateFormat>${commit.dateFormat}</dateFormat>
+                        <dateFormatTimeZone>UTC</dateFormatTimeZone>
+                        <exlcudeProperties>
+                            <excludeProperty>git.closest.*</excludeProperty>
+                            <excludeProperty>git.total.*</excludeProperty>
+                            <excludeProperty>git.tags.*</excludeProperty>
+                            <excludeProperty>git.local.branch.*</excludeProperty>
+                            <excludeProperty>git.dirty</excludeProperty>
+                        </exlcudeProperties>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -112,7 +126,7 @@
                     <configuration>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -124,7 +138,7 @@
                     <configuration>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -138,7 +152,7 @@
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -152,13 +166,13 @@
         </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>create-build-number</id>
+                        <id>get-the-git-infos</id>
                         <goals>
-                            <goal>create</goal>
+                            <goal>revision</goal>
                         </goals>
                     </execution>
                 </executions>
