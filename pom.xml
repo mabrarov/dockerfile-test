@@ -13,6 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <commit.dateFormat>yyyy-MM-dd'T'HH:mm:ssXXX</commit.dateFormat>
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -57,22 +58,13 @@
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>base-image</artifactId>
                 <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>hollow-image</artifactId>
                 <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.mabrarov.dockerfile-test</groupId>
-                <artifactId>app-image</artifactId>
-                <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -81,9 +73,25 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.4</version>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <generateGitProperties>false</generateGitProperties>
+                        <offline>true</offline>
+                        <injectAllReactorProject>true</injectAllReactorProject>
+                        <runOnlyOnce>true</runOnlyOnce>
+                        <skipPoms>false</skipPoms>
+                        <dateFormat>${commit.dateFormat}</dateFormat>
+                        <dateFormatTimeZone>UTC</dateFormatTimeZone>
+                        <exlcudeProperties>
+                            <excludeProperty>git.closest.*</excludeProperty>
+                            <excludeProperty>git.total.*</excludeProperty>
+                            <excludeProperty>git.tags.*</excludeProperty>
+                            <excludeProperty>git.local.branch.*</excludeProperty>
+                            <excludeProperty>git.dirty</excludeProperty>
+                        </exlcudeProperties>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -113,12 +121,24 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <git-commit>${git.commit.id}</git-commit>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.3</version>
                     <configuration>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -132,7 +152,7 @@
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <archive>
                             <manifestEntries>
-                                <git-commit>${buildNumber}</git-commit>
+                                <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
                     </configuration>
@@ -146,13 +166,13 @@
         </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>get-commit-hash</id>
+                        <id>get-the-git-infos</id>
                         <goals>
-                            <goal>create</goal>
+                            <goal>revision</goal>
                         </goals>
                     </execution>
                 </executions>

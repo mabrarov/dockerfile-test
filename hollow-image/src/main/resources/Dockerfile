@@ -31,4 +31,8 @@ ENV ENABLE_ACCESS_LOG="true" \
 
 LABEL name="@docker.repository@" \
     version="@project.version@" \
-    git-commit="@buildNumber@"
+    release="@project.version@" \
+    build-date="@git.commit.time@" \
+    vcs-url="@git.remote.origin.url@" \
+    vcs-type="git" \
+    vcs-ref="@git.commit.id@"
