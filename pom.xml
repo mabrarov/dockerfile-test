@@ -182,7 +182,7 @@
                 <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>get-commit-hash</id>
+                        <id>get-the-git-infos</id>
                         <goals>
                             <goal>revision</goal>
                         </goals>
