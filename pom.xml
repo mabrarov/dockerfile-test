@@ -59,22 +59,13 @@
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>base-image</artifactId>
                 <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>hollow-image</artifactId>
                 <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.mabrarov.dockerfile-test</groupId>
-                <artifactId>app-image</artifactId>
-                <version>${project.version}</version>
-                <type>tar</type>
-                <classifier>docker</classifier>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -131,9 +122,23 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <git-commit>${git.commit.id}</git-commit>
+                                <Reproducible-Build>true</Reproducible-Build>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.3</version>
                     <configuration>
+                        <recompressZippedFiles>false</recompressZippedFiles>s
                         <archive>
                             <manifestEntries>
                                 <git-commit>${git.commit.id}</git-commit>
@@ -158,14 +163,14 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>io.github.zlika</groupId>
-                    <artifactId>reproducible-build-maven-plugin</artifactId>
-                    <version>0.11</version>
-                </plugin>
-                <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.github.zlika</groupId>
+                    <artifactId>reproducible-build-maven-plugin</artifactId>
+                    <version>0.11</version>
                 </plugin>
             </plugins>
         </pluginManagement>
