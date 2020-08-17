@@ -30,7 +30,7 @@
     </extensions>
     <system-properties>
         <property name="jboss.config.current-history-length" value="0"/>
-        <property name="org.mabrarov.dockerfile-test.application.configuration.file" value="{{ APPLICATION_CONFIGURATION_FILE | e }}"/>
+        <property name="org.mabrarov.dockerfile-test.application.configuration.file" value="{{ APPLICATION_CONFIGURATION_FILE | escape_jboss_attribute_expression | e }}"/>
     </system-properties>
     <management>
         <security-realms>
