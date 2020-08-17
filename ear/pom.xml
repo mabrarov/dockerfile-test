@@ -31,11 +31,6 @@
             <artifactId>war</artifactId>
             <type>war</type>
         </dependency>
-        <dependency>
-            <groupId>org.mabrarov.dockerfile-test</groupId>
-            <artifactId>war</artifactId>
-            <type>pom</type>
-        </dependency>
     </dependencies>
 
     <build>
@@ -51,7 +46,6 @@
                             <contextRoot>/</contextRoot>
                         </webModule>
                     </modules>
-                    <skinnyWars>true</skinnyWars>
                 </configuration>
             </plugin>
         </plugins>

@@ -47,12 +47,6 @@
             </dependency>
             <dependency>
                 <groupId>org.mabrarov.dockerfile-test</groupId>
-                <artifactId>war</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.mabrarov.dockerfile-test</groupId>
                 <artifactId>ear</artifactId>
                 <version>${project.version}</version>
                 <type>ear</type>
