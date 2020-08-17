@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.1.4</version>
+        <version>1.1.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>hollow-image</artifactId>
@@ -33,8 +33,7 @@
         <dependency>
             <groupId>org.mabrarov.dockerfile-test</groupId>
             <artifactId>base-image</artifactId>
-            <type>tar</type>
-            <classifier>docker</classifier>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
@@ -82,14 +81,13 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>${docker.repository}</name>
+                            <name>${docker.repository}:${project.version}</name>
                             <build>
                                 <contextDir>${project.build.directory}/context</contextDir>
                                 <tags>
                                     <tag>latest</tag>
-                                    <tag>${project.version}</tag>
                                 </tags>
-                                <cleanup>none</cleanup>
+                                <cleanup>${docker.cleanup}</cleanup>
                             </build>
                         </image>
                     </images>
@@ -99,13 +97,6 @@
                         <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                    <execution>
-                        <id>archive-docker-context</id>
-                        <goals>
-                            <goal>source</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>

@@ -19,19 +19,15 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.1.4</version>
+        <version>1.1.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>base-image</artifactId>
     <packaging>pom</packaging>
 
     <properties>
-        <python-pip.package.filename>python2-pip-8.1.2-10.el7.noarch.rpm</python-pip.package.filename>
-        <python-pip.package.url>http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/p/${python-pip.package.filename}</python-pip.package.url>
-        <python-pip.package.rpm.path>/tmp/${python-pip.package.filename}</python-pip.package.rpm.path>
-
+        <python-pip.package.url>https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/python2-pip-8.1.2-12.el7.noarch.rpm</python-pip.package.url>
         <j2cli.version>0.3.10</j2cli.version>
-
         <docker.repository>abrarov/dockerfile-test-base</docker.repository>
     </properties>
 
@@ -64,14 +60,13 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>${docker.repository}</name>
+                            <name>${docker.repository}:${project.version}</name>
                             <build>
                                 <contextDir>${project.build.directory}/context</contextDir>
                                 <tags>
                                     <tag>latest</tag>
-                                    <tag>${project.version}</tag>
                                 </tags>
-                                <cleanup>none</cleanup>
+                                <cleanup>${docker.cleanup}</cleanup>
                             </build>
                         </image>
                     </images>
@@ -81,13 +76,6 @@
                         <id>build-docker-image</id>
                         <goals>
                             <goal>build</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                    <execution>
-                        <id>archive-docker-context</id>
-                        <goals>
-                            <goal>source</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>

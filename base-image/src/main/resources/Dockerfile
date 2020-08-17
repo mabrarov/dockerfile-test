@@ -14,14 +14,12 @@
 # limitations under the License.
 #
 
-FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-23.1561731010
+FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-28
 
 USER root
 
 RUN echo "Installing pip..." && \
-    curl -sL @python-pip.package.url@ -o @python-pip.package.rpm.path@ && \
-    rpm -i @python-pip.package.rpm.path@ && \
-    rm -f @python-pip.package.rpm.path@ && \
+    rpm -i @python-pip.package.url@ && \
     echo "pip installed" && \
     pip --version && \
     echo "Installing Jinja2 Command-Line Tool (j2cli)..." && \
@@ -33,4 +31,8 @@ USER 185
 
 LABEL name="@docker.repository@" \
     version="@project.version@" \
-    git-commit="@buildNumber@"
+    release="@project.version@" \
+    build-date="@git.commit.time@" \
+    vcs-url="@git.remote.origin.url@" \
+    vcs-type="git" \
+    vcs-ref="@git.commit.id@"
