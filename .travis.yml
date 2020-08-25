@@ -14,49 +14,42 @@
 # limitations under the License.
 #
 
-language: java
+language: 'java'
 
 cache:
   directories:
-    - ${HOME}/.m2/repository/
+    - '${HOME}/.m2/repository'
 
 services:
-  - docker
+  - 'docker'
 
 env:
   global:
-    - DOCKERHUB_USER: abrarov
-    - MAVEN_WRAPPER: 0
-    - RELEASE_JOB: 0
-    - DOCKER_PUSH_RETRIES: 10
+    - DOCKERHUB_USER: 'abrarov'
+    - MAVEN_WRAPPER: '0'
+    - RELEASE_JOB: '0'
+    - DOCKER_PUSH_RETRIES: '10'
 
 matrix:
   include:
-    # OpenJDK 12
-    - dist: bionic
-      jdk: openjdk12
-    # OpenJDK 11
-    - dist: bionic
-      jdk: openjdk11
-    # Oracle JDK 11
-    - dist: trusty
-      jdk: oraclejdk11
     # OpenJDK 8
-    - dist: trusty
-      env: RELEASE_JOB=1
-      jdk: openjdk8
+    - dist: 'trusty'
+      jdk: 'openjdk8'
+      env:
+        - RELEASE_JOB: '1'
     # OpenJDK 8 with Maven Wrapper
-    - dist: trusty
-      env: MAVEN_WRAPPER=1
-      jdk: openjdk8
+    - dist: 'trusty'
+      jdk: 'openjdk8'
+      env:
+        - MAVEN_WRAPPER: '1'
     # Oracle JDK 8
-    - dist: trusty
-      jdk: oraclejdk8
+    - dist: 'trusty'
+      jdk: 'oraclejdk8'
 
 before_install: |
   travis_retry docker login -u "${REDHAT_USER}" -p "${REDHAT_PASSWORD}" registry.redhat.io
 
-install: skip
+install: 'skip'
 
 script: |
   if [[ "${MAVEN_WRAPPER}" -ne 0 ]]; then
@@ -71,8 +64,8 @@ script: |
 
 deploy:
   skip_cleanup: true
-  provider: script
-  script: bash push-docker-images.sh
+  provider: 'script'
+  script: 'bash push-docker-images.sh'
   on:
-    branch: master
-    condition: ${RELEASE_JOB} = 1
+    branch: 'master'
+    condition: '${RELEASE_JOB} = 1'
