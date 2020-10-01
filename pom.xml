@@ -19,6 +19,7 @@
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-ear-plugin.version>3.0.2</maven-ear-plugin.version>
         <docker-maven-plugin.version>0.33.0</docker-maven-plugin.version>
         <docker.verbose>true</docker.verbose>
         <docker.cleanup>none</docker.cleanup>
@@ -152,7 +153,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-ear-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>${maven-ear-plugin.version}</version>
                     <configuration>
                         <version>6</version>
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
