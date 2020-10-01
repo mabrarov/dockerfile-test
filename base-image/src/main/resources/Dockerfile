@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-28
+FROM registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-31
 
 USER root
 
