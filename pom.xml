@@ -147,6 +147,9 @@
                             <manifestEntries>
                                 <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
                         </archive>
                     </configuration>
                 </plugin>
