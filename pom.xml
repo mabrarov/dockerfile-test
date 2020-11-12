@@ -133,6 +133,7 @@
                     <configuration>
                         <archive>
                             <manifestEntries>
+                                <!--suppress UnresolvedMavenProperty -->
                                 <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
@@ -145,6 +146,7 @@
                     <configuration>
                         <archive>
                             <manifestEntries>
+                                <!--suppress UnresolvedMavenProperty -->
                                 <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
@@ -159,6 +161,7 @@
                         <defaultLibBundleDir>lib</defaultLibBundleDir>
                         <archive>
                             <manifestEntries>
+                                <!--suppress UnresolvedMavenProperty -->
                                 <git-commit>${git.commit.id}</git-commit>
                             </manifestEntries>
                         </archive>
