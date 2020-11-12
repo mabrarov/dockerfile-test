@@ -25,9 +25,15 @@ travis_retry() {
 main() {
   travis_retry docker login -u "${DOCKERHUB_USER}" -p "${DOCKERHUB_PASSWORD}"
 
-  mvn -f base-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
-  mvn -f hollow-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
-  mvn -f app-image/pom.xml --batch-mode docker:push "-Ddocker.push.retries=${DOCKER_PUSH_RETRIES}"
+  if [[ "${MAVEN_WRAPPER}" -ne 0 ]]; then
+    push_cmd="$(printf "%q" "${TRAVIS_BUILD_DIR}/mvnw")"
+  else
+    push_cmd="mvn"
+  fi
+  push_cmd="${push_cmd} -f $(printf "%q" "${TRAVIS_BUILD_DIR}/pom.xml") --batch-mode docker:push"
+
+  echo "Pushing with: ${push_cmd}"
+  eval "${push_cmd}"
 }
 
 main "${@}"
