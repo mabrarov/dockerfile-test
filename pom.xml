@@ -23,6 +23,7 @@
         <docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
         <docker.verbose>true</docker.verbose>
         <docker.cleanup>none</docker.cleanup>
+        <docker.image.registry>abrarov</docker.image.registry>
     </properties>
 
     <modules>

@@ -26,7 +26,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <docker.repository>abrarov/dockerfile-test-hollow</docker.repository>
+        <docker.repository>${docker.image.registry}/dockerfile-test-hollow</docker.repository>
     </properties>
 
     <dependencies>

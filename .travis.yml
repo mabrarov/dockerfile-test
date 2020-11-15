@@ -27,6 +27,8 @@ env:
   global:
     - DOCKERHUB_USER: 'abrarov'
     - MAVEN_WRAPPER: '0'
+    - APP_START_TIMEOUT: '120'
+    - APP_STOP_TIMEOUT: '120'
     - RELEASE_JOB: '0'
     - DOCKER_PUSH_RETRIES: '10'
 
@@ -51,16 +53,7 @@ before_install: |
 
 install: 'skip'
 
-script: |
-  if [[ "${MAVEN_WRAPPER}" -ne 0 ]]; then
-    build_cmd="$(printf "%q" "${TRAVIS_BUILD_DIR}/mvnw")"
-  else
-    build_cmd="mvn";
-  fi &&
-  build_cmd="${build_cmd} -f $(printf "%q" "${TRAVIS_BUILD_DIR}/pom.xml") --batch-mode clean package" &&
-  echo "Building with: ${build_cmd}" &&
-  eval "${build_cmd}" &&
-  docker images
+script: 'bash travis/build-and-test.sh'
 
 deploy:
   skip_cleanup: true
