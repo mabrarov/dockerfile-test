@@ -59,7 +59,7 @@ before_cache: 'bash travis/save-docker-images-into-cache.sh'
 deploy:
   skip_cleanup: true
   provider: 'script'
-  script: 'bash push-docker-images.sh'
+  script: 'bash travis/push-docker-images.sh'
   on:
     branch: 'master'
     condition: '${RELEASE_JOB} = 1'
