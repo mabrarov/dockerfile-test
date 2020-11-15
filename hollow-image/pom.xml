@@ -19,14 +19,14 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
     </parent>
 
     <artifactId>hollow-image</artifactId>
     <packaging>pom</packaging>
 
     <properties>
-        <docker.repository>abrarov/dockerfile-test-hollow</docker.repository>
+        <docker.repository>${docker.image.registry}/dockerfile-test-hollow</docker.repository>
     </properties>
 
     <dependencies>

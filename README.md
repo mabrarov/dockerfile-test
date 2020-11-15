@@ -84,10 +84,9 @@ expected output looks like:
 ```html
 <html>
 <head>
-    <title>Dockerfile Maven plugin test</title>
+    <title>Docker Maven plugin test</title>
 </head>
 <body>
-
 Sat Jul  6 15:42:38 MSK 2019
 </body>
 </html>

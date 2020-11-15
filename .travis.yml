@@ -19,6 +19,7 @@ language: 'java'
 cache:
   directories:
     - '${HOME}/.m2/repository'
+    - '${HOME}/docker'
 
 services:
   - 'docker'
@@ -26,7 +27,10 @@ services:
 env:
   global:
     - DOCKERHUB_USER: 'abrarov'
+    - J2CLI_VERSION: '0.3.10'
     - MAVEN_WRAPPER: '0'
+    - APP_START_TIMEOUT: '120'
+    - APP_STOP_TIMEOUT: '120'
     - RELEASE_JOB: '0'
     - DOCKER_PUSH_RETRIES: '10'
 
@@ -42,25 +46,15 @@ matrix:
       jdk: 'openjdk8'
       env:
         - MAVEN_WRAPPER: '1'
-    # Oracle JDK 8
-    - dist: 'trusty'
-      jdk: 'oraclejdk8'
+    # OpenJDK 11
+    - dist: 'bionic'
+      jdk: 'openjdk11'
 
-before_install: |
-  travis_retry docker login -u "${REDHAT_USER}" -p "${REDHAT_PASSWORD}" registry.redhat.io
+install: 'bash travis/load-cached-docker-images.sh'
 
-install: 'skip'
+script: 'bash travis/build-and-test.sh'
 
-script: |
-  if [[ "${MAVEN_WRAPPER}" -ne 0 ]]; then
-    build_cmd="$(printf "%q" "${TRAVIS_BUILD_DIR}/mvnw")"
-  else
-    build_cmd="mvn";
-  fi &&
-  build_cmd="${build_cmd} -f $(printf "%q" "${TRAVIS_BUILD_DIR}/pom.xml") --batch-mode clean package" &&
-  echo "Building with: ${build_cmd}" &&
-  eval "${build_cmd}" &&
-  docker images
+before_cache: 'bash travis/save-docker-images-into-cache.sh'
 
 deploy:
   skip_cleanup: true
