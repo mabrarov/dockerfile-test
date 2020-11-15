@@ -28,7 +28,7 @@ int() {
 
 split_by_colon() {
   array="${1}"
-  if [ "${array}" = "" ]; then
+  if [ -z "${array}" ]; then
     return
   fi
   number_of_params="${#}"
