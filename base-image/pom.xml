@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.mabrarov.dockerfile-test</groupId>
         <artifactId>dockerfile-test</artifactId>
-        <version>1.2.2-SNAPSHOT</version>
+        <version>1.2.2</version>
     </parent>
 
     <artifactId>base-image</artifactId>
@@ -27,7 +27,6 @@
 
     <properties>
         <python-pip.package.url>https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/python2-pip-8.1.2-14.el7.noarch.rpm</python-pip.package.url>
-        <j2cli.version>0.3.10</j2cli.version>
         <docker.repository>${docker.image.registry}/dockerfile-test-base</docker.repository>
     </properties>
 

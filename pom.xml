@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mabrarov.dockerfile-test</groupId>
     <artifactId>dockerfile-test</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.2</version>
     <packaging>pom</packaging>
 
     <scm>
@@ -23,7 +23,9 @@
         <docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
         <docker.verbose>true</docker.verbose>
         <docker.cleanup>none</docker.cleanup>
+        <jboss.image>registry.redhat.io/jboss-eap-6/eap64-openshift:1.9-32.1604502274</jboss.image>
         <docker.image.registry>abrarov</docker.image.registry>
+        <j2cli.version>0.3.10</j2cli.version>
     </properties>
 
     <modules>
